@@ -268,6 +268,9 @@ void loop() {
 브로커=ai.doowon.ac.kr 와이파이정보 ssid=academy5 pw=없음 intopic=intopic/ outtopic=outtopic mqtt 5초에 한번 씩 "김동일" 메세비보내는 통신 프로그램 만들어줘
 ```
 [생성된 프로그램]  
+다음은 수정해야 합니다.     
+client.connect("ESP32Client")      
+여기 ESP32Client 는 고유한 이름으로 고쳐서 넣어 주세요 같은 이름으로 접속하는 사람이 있으면 둘다 통신이 않됩니다. 
 ```
 #include <WiFi.h>
 #include <PubSubClient.h>
