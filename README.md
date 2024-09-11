@@ -41,3 +41,29 @@ void loop() {
   delay(2000);  // 2초마다 측정
 }
 ```
+보드 입출력 기초 입력 정보
+```
+#include <Wire.h>
+
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+
+void setup() {
+  // Initialize Serial for debugging
+  Serial.begin(115200);
+
+  // Set each output pin as an output
+  for (int i = 0; i < 4; i++) {
+    pinMode(outputPins[i], OUTPUT);
+  }
+
+  // Set each input pin as an input
+  for (int i = 0; i < 4; i++) {
+    pinMode(inputPins[i], INPUT);
+  }
+}
+void loop() {
+}
+```
