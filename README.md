@@ -616,4 +616,189 @@ void loop() {
   client.loop();
 }
 ```
+[ChatGPT] 
+```
+이 프로그램에서 입력포트를 감시하다가
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+in0=inputPins[0], in1=inputPins[1], in2=inputPins[2], in3=inputPins[3] 
+mqtt outtopic 으로 publish 해줘
+```
+[생성된 프로그램]  
+```
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <ArduinoJson.h>
 
+// Wi-Fi 정보
+const char* ssid = "academy5";
+const char* password = "";
+
+// MQTT 브로커 정보
+const char* mqttServer = "ai.doowon.ac.kr";
+const int mqttPort = 1883;
+
+// MQTT 주제
+const char* inTopic = "intopic/";
+const char* outTopic = "outtopic/";
+
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+
+// 클라이언트 객체
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+// 이전 입력 상태 저장 변수
+int lastInputState[4] = {LOW, LOW, LOW, LOW};  // 초기 입력 상태
+
+// Wi-Fi 연결 함수
+void setupWiFi() {
+  delay(10);
+  Serial.println();
+  Serial.print("WiFi에 연결 중: ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi 연결 성공");
+  Serial.print("IP 주소: ");
+  Serial.println(WiFi.localIP());
+}
+
+// MQTT 메시지 수신 콜백 함수
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("메시지 수신 [");
+  Serial.print(topic);
+  Serial.print("]: ");
+
+  // 수신된 payload를 출력
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+
+  // JSON 파싱을 위한 버퍼 설정
+  StaticJsonDocument<200> doc;
+
+  // 수신된 메시지를 JSON으로 파싱
+  DeserializationError error = deserializeJson(doc, payload, length);
+  if (error) {
+    Serial.print("JSON 파싱 실패: ");
+    Serial.println(error.c_str());
+    return;
+  }
+
+  // JSON 객체에서 "no"와 "value" 추출
+  int no = doc["no"];
+  int value = doc["value"];
+
+  // 추출한 번호가 유효한지 확인
+  if (no >= 0 && no < 4) {
+    // value에 따라 핀을 ON/OFF
+    if (value == 1) {
+      digitalWrite(outputPins[no], HIGH);  // 핀을 ON
+      Serial.printf("Pin %d ON\n", outputPins[no]);
+    } else {
+      digitalWrite(outputPins[no], LOW);   // 핀을 OFF
+      Serial.printf("Pin %d OFF\n", outputPins[no]);
+    }
+  } else {
+    Serial.println("유효하지 않은 핀 번호");
+  }
+}
+
+// MQTT 브로커 연결 함수
+void connectMQTT() {
+  while (!client.connected()) {
+    Serial.print("MQTT 브로커에 연결 중...");
+
+    // 클라이언트 ID로 연결 시도
+    if (client.connect("ESP32Client")) {
+      Serial.println("MQTT 브로커 연결 성공");
+
+      // intopic을 구독
+      client.subscribe(inTopic);
+    } else {
+      Serial.print("MQTT 연결 실패, 상태코드: ");
+      Serial.print(client.state());
+      delay(2000);  // 2초 후 재시도
+    }
+  }
+}
+
+// 입력 핀 상태를 MQTT로 발행하는 함수
+void publishInputState() {
+  StaticJsonDocument<200> doc;
+
+  // 각 입력 핀 상태를 읽고, 변경된 경우만 MQTT로 발행
+  for (int i = 0; i < 4; i++) {
+    int currentState = digitalRead(inputPins[i]);
+    if (currentState != lastInputState[i]) {
+      // 입력 상태가 변경되었으므로 메시지 생성
+      doc.clear();
+      doc["input"] = i;
+      doc["state"] = currentState;
+
+      char buffer[100];
+      serializeJson(doc, buffer);
+
+      // MQTT로 발행
+      client.publish(outTopic, buffer);
+      Serial.printf("Input %d 상태 변경: %d\n", i, currentState);
+
+      // 이전 상태를 업데이트
+      lastInputState[i] = currentState;
+    }
+  }
+}
+
+void setup() {
+  // 시리얼 모니터 시작
+  Serial.begin(115200);
+
+  // Wi-Fi 연결
+  setupWiFi();
+
+  // MQTT 브로커 설정
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback);
+
+  // Output 핀들을 출력 모드로 설정
+  for (int i = 0; i < 4; i++) {
+    pinMode(outputPins[i], OUTPUT);
+    digitalWrite(outputPins[i], LOW);  // 초기 상태는 OFF
+  }
+
+  // Input 핀들을 입력 모드로 설정
+  for (int i = 0; i < 4; i++) {
+    pinMode(inputPins[i], INPUT);
+  }
+
+  // MQTT 브로커에 연결
+  connectMQTT();
+}
+
+void loop() {
+  // MQTT 연결 유지
+  if (!client.connected()) {
+    connectMQTT();
+  }
+  client.loop();
+
+  // 입력 핀 상태 모니터링 및 MQTT 발행
+  publishInputState();
+
+  // 짧은 지연 (50ms)
+  delay(50);
+}
+```
