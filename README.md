@@ -97,3 +97,41 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
+[ChatGPT] 
+```
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+esp32 wroom 16번 핀의 입력에 따라 26번으로 출력이 나가게 프로그램 해줘
+```
+[생성된 프로그램]  
+```
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+
+void setup() {
+  // 26번 핀을 출력으로 설정
+  pinMode(outputPins[0], OUTPUT);
+  
+  // 16번 핀을 입력으로 설정
+  pinMode(inputPins[0], INPUT);
+}
+
+void loop() {
+  // 16번 핀의 입력 상태를 읽음
+  int inputState = digitalRead(inputPins[0]);
+
+  // 입력 상태에 따라 26번 핀에 출력
+  if (inputState == HIGH) {
+    digitalWrite(outputPins[0], HIGH);  // 16번 핀이 HIGH이면 26번 핀을 켬
+  } else {
+    digitalWrite(outputPins[0], LOW);   // 16번 핀이 LOW이면 26번 핀을 끔
+  }
+
+  delay(10);  // 짧은 대기 시간으로 입력 상태 지속적으로 확인
+}
+```
+
