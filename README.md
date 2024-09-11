@@ -67,3 +67,33 @@ void setup() {
 void loop() {
 }
 ```
+[ChatGPT]    
+```
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+esp32 wroom 26번 핀이 1초 간격으로 점등되게 프로그램 해줘
+```
+[생성된 프로그램]  
+```
+// Output pin numbers
+const int outputPins[4] = {26, 27, 32, 33};
+// Input pin numbers
+const int inputPins[4] = {16, 17, 18, 19};
+
+void setup() {
+  // 26번 핀을 출력으로 설정
+  pinMode(outputPins[0], OUTPUT);
+}
+
+void loop() {
+  // 26번 핀을 HIGH로 설정하여 LED를 켠다
+  digitalWrite(outputPins[0], HIGH);
+  delay(1000);  // 1초 대기
+  
+  // 26번 핀을 LOW로 설정하여 LED를 끈다
+  digitalWrite(outputPins[0], LOW);
+  delay(1000);  // 1초 대기
+}
+```
