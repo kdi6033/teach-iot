@@ -134,4 +134,61 @@ void loop() {
   delay(10);  // 짧은 대기 시간으로 입력 상태 지속적으로 확인
 }
 ```
+[ChatGPT] 
+```
+esp32 wroom 와이파이 연결해줘 ssid=academy5 pw는 없음 학국시간 1초 간격으로 표시해줘
+```
+[생성된 프로그램]  
+```
+#include <WiFi.h>
+#include <time.h>
+
+// Wi-Fi 정보
+const char* ssid = "academy5";  // Wi-Fi SSID
+const char* password = "";      // 비밀번호 없음
+
+// NTP 서버 설정
+const char* ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = 9 * 3600;  // 한국 시간대 (GMT +9)
+const int daylightOffset_sec = 0;     // 일광 절약 시간 없음
+
+void setup() {
+  // 시리얼 모니터 시작
+  Serial.begin(115200);
+
+  // Wi-Fi 연결 시도
+  Serial.printf("WiFi에 연결 중: %s\n", ssid);
+  WiFi.begin(ssid, password);
+
+  // Wi-Fi 연결이 완료될 때까지 대기
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  
+  Serial.println("\nWiFi 연결 성공!");
+  Serial.print("IP 주소: ");
+  Serial.println(WiFi.localIP());
+
+  // NTP 서버와 시간 동기화
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+}
+
+void loop() {
+  // 시간 정보 구조체
+  struct tm timeinfo;
+  
+  // 현재 시간 가져오기
+  if (!getLocalTime(&timeinfo)) {
+    Serial.println("시간을 가져올 수 없습니다.");
+    return;
+  }
+
+  // 시간 출력 (1초 간격)
+  Serial.printf("현재 한국 시간: %02d:%02d:%02d\n", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+
+  delay(1000);  // 1초 대기
+}
+```
+
 
