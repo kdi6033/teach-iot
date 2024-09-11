@@ -190,5 +190,76 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
+[ChatGPT] 
+```
+앞에 프로그램 매일 13시15분부터 13시16분까지  26번 포트 on으로 출력하게 프로그램 해줘
+```
+[생성된 프로그램]  
+```
+#include <WiFi.h>
+#include <time.h>
+
+// Wi-Fi 정보
+const char* ssid = "academy5";  // Wi-Fi SSID
+const char* password = "";      // 비밀번호 없음
+
+// NTP 서버 설정
+const char* ntpServer = "pool.ntp.org";
+const long gmtOffset_sec = 9 * 3600;  // 한국 시간대 (GMT +9)
+const int daylightOffset_sec = 0;     // 일광 절약 시간 없음
+
+// Output pin 설정
+const int outputPin = 26;
+
+void setup() {
+  // 시리얼 모니터 시작
+  Serial.begin(115200);
+
+  // Wi-Fi 연결 시도
+  Serial.printf("WiFi에 연결 중: %s\n", ssid);
+  WiFi.begin(ssid, password);
+
+  // Wi-Fi 연결이 완료될 때까지 대기
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  
+  Serial.println("\nWiFi 연결 성공!");
+  Serial.print("IP 주소: ");
+  Serial.println(WiFi.localIP());
+
+  // NTP 서버와 시간 동기화
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+
+  // 26번 핀을 출력 모드로 설정
+  pinMode(outputPin, OUTPUT);
+}
+
+void loop() {
+  // 시간 정보 구조체
+  struct tm timeinfo;
+  
+  // 현재 시간 가져오기
+  if (!getLocalTime(&timeinfo)) {
+    Serial.println("시간을 가져올 수 없습니다.");
+    return;
+  }
+
+  // 시간 출력 (1초 간격)
+  Serial.printf("현재 한국 시간: %02d:%02d:%02d\n", timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+
+  // 13시 15분부터 13시 16분까지 26번 핀을 ON으로 설정
+  if (timeinfo.tm_hour == 13 && timeinfo.tm_min >= 15 && timeinfo.tm_min < 16) {
+    digitalWrite(outputPin, HIGH);  // 26번 핀 켬
+    Serial.println("26번 핀이 ON 상태입니다.");
+  } else {
+    digitalWrite(outputPin, LOW);   // 그 외 시간에는 26번 핀 끔
+    Serial.println("26번 핀이 OFF 상태입니다.");
+  }
+
+  delay(1000);  // 1초 대기
+}
+```
 
 
