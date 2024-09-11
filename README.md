@@ -262,4 +262,116 @@ void loop() {
 }
 ```
 
+# MQTT 통신    
+[ChatGPT] 
+```
+브로커=ai.doowon.ac.kr 와이파이정보 ssid=academy5 pw=없음 intopic=intopic/ outtopic=outtopic mqtt 5초에 한번 씩 "김동일" 메세비보내는 통신 프로그램 만들어줘
+```
+[생성된 프로그램]  
+```
+#include <WiFi.h>
+#include <PubSubClient.h>
+
+// Wi-Fi 정보
+const char* ssid = "academy5";
+const char* password = "";
+
+// MQTT 브로커 정보
+const char* mqttServer = "ai.doowon.ac.kr";
+const int mqttPort = 1883;
+
+// MQTT 주제
+const char* inTopic = "intopic/";
+const char* outTopic = "outtopic/";
+
+// 클라이언트 객체
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+// Wi-Fi 연결 함수
+void setupWiFi() {
+  delay(10);
+  Serial.println();
+  Serial.print("WiFi에 연결 중: ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi 연결 성공");
+  Serial.print("IP 주소: ");
+  Serial.println(WiFi.localIP());
+}
+
+// MQTT 메시지 수신 콜백 함수
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("메시지 수신 [");
+  Serial.print(topic);
+  Serial.print("]: ");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+}
+
+// MQTT 브로커 연결 함수
+void connectMQTT() {
+  while (!client.connected()) {
+    //Serial.print("MQTT 브로커에 연결 중...");
+
+    // 클라이언트 ID로 연결 시도
+    if (client.connect("ESP32Client")) {
+      //Serial.println("MQTT 브로커 연결 성공");
+
+      // intopic을 구독
+      client.subscribe(inTopic);
+    } else {
+      Serial.print("MQTT 연결 실패, 상태코드: ");
+      Serial.print(client.state());
+      delay(2000);  // 2초 후 재시도
+    }
+  }
+}
+
+void setup() {
+  // 시리얼 모니터 시작
+  Serial.begin(115200);
+
+  // Wi-Fi 연결
+  setupWiFi();
+
+  // MQTT 브로커 설정
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback);
+
+  // MQTT 브로커에 연결
+  connectMQTT();
+}
+
+void loop() {
+  // MQTT 연결 유지
+  if (!client.connected()) {
+    connectMQTT();
+  }
+  client.loop();
+
+  // 5초마다 메시지 발행
+  static unsigned long lastMsg = 0;
+  unsigned long now = millis();
+  if (now - lastMsg > 5000) {  // 5초마다 실행
+    lastMsg = now;
+    String message = "김동일";  // 발행할 메시지
+    Serial.print("메시지 발행: ");
+    Serial.println(message);
+
+    // outtopic에 메시지 발행
+    client.publish(inTopic, message.c_str());
+  }
+}
+```
 
