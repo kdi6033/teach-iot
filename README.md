@@ -1011,3 +1011,231 @@ void loop() {
   delay(50);
 }
 ```
+# Node RED
+[node red 프로그램]
+```
+[
+    {
+        "id": "e0ccba070e41516f",
+        "type": "ui_switch",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "3e39067bccc61553",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "a5f6f1bc8a1b6947"
+            ]
+        ]
+    },
+    {
+        "id": "a5f6f1bc8a1b6947",
+        "type": "ui_led",
+        "z": "16808b1eb2fdb744",
+        "order": 1,
+        "group": "3e39067bccc61553",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 330,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f152d3d26742f666",
+        "type": "ui_audio",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "group": "3e39067bccc61553",
+        "voice": "Google 한국의",
+        "always": "",
+        "x": 340,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "3e39067bccc61553",
+        "type": "ui_group",
+        "name": "스위치",
+        "tab": "d83f9ecf636984b5",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d83f9ecf636984b5",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
+```
+[ChatGPG]
+```
+다음은 node red 프로그램 입니다. 스위가 켜지면 "스위치가 켜졌습니다." 하고 오디오로 출력이 나가고 스위가 꺼지면 "스위치가 꺼졌습니다." 하고 오디오로 출력하는 프로그램 만들어줘
+```
+[결과 프로그램]
+```
+[
+    {
+        "id": "f2dbecbb8b139fb9",
+        "type": "ui_switch",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "3e39067bccc61553",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "c205868608e19610",
+                "e51cba5ed050ad8b"
+            ]
+        ]
+    },
+    {
+        "id": "c205868608e19610",
+        "type": "ui_led",
+        "z": "16808b1eb2fdb744",
+        "order": 1,
+        "group": "3e39067bccc61553",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e51cba5ed050ad8b",
+        "type": "function",
+        "z": "16808b1eb2fdb744",
+        "name": "Set Audio Message",
+        "func": "if (msg.payload === true) {\n    msg.payload = \"스위치가 켜졌습니다.\";\n} else {\n    msg.payload = \"스위치가 꺼졌습니다.\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "ba6cd5c7b5e48307"
+            ]
+        ]
+    },
+    {
+        "id": "ba6cd5c7b5e48307",
+        "type": "ui_audio",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "group": "3e39067bccc61553",
+        "voice": "Google 한국의",
+        "always": "",
+        "x": 600,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3e39067bccc61553",
+        "type": "ui_group",
+        "name": "스위치",
+        "tab": "d83f9ecf636984b5",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d83f9ecf636984b5",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
+```
+
+
