@@ -1244,7 +1244,8 @@ void loop() {
 ```
 ### [프로젝트] 스위치로 i2r-03 보드 on off 제어하기
 다음은 node red 소스 프로그램 입니다. topic 과 맥 어드레스는 수정해서 입력하면 보유한 IoT-PLC를 제어 할 수 있습니다.
-<img src="https://github.com/user-attachments/assets/cfa246dc-5945-470e-a59c-f47b81525dd6" alt="연습문제1" width="200">
+<img src="https://github.com/user-attachments/assets/cfa246dc-5945-470e-a59c-f47b81525dd6" alt="연습문제1" width="200">    
+topic은 "i2r/email/in" 여기에 email은 어플에서 블루투스로 정보를 입력할 때의 email 정보를 입력하세요. 
 
 ```
 [
