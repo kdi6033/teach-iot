@@ -1012,6 +1012,7 @@ void loop() {
 }
 ```
 # Node RED
+다음 그림은 스위치의 동작에 따라 Led 가 on off 합니다. 이것을 ChatGPT를 이용해 간단하게 오디오 음성으로 출력을 내보내는 프로그램을 만들어 보겠습니다.
 <img src="https://github.com/user-attachments/assets/4aaa9657-a041-4de6-a86d-0b6ec39ab798" alt="연습문제1" width="200">
 
 [node red 프로그램]
@@ -1118,7 +1119,8 @@ void loop() {
 ```
 다음은 node red 프로그램 입니다. 스위가 켜지면 "스위치가 켜졌습니다." 하고 오디오로 출력이 나가고 스위가 꺼지면 "스위치가 꺼졌습니다." 하고 오디오로 출력하는 프로그램 만들어줘
 ```
-[결과 프로그램]
+다음은 ChatGPT가 작성한 프로그램 입니다.
+[결과 프로그램]    
 <img src="https://github.com/user-attachments/assets/387555c1-d6ac-4783-afcb-497125bfe703" alt="연습문제1" width="200">
 ```
 [
