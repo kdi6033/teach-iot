@@ -1012,6 +1012,9 @@ void loop() {
 }
 ```
 # Node RED
+<img src="https://github.com/user-attachments/assets/4aaa9657-a041-4de6-a86d-0b6ec39ab798" alt="연습문제1" width="400">
+![그림1](https://github.com/user-attachments/assets/4aaa9657-a041-4de6-a86d-0b6ec39ab798)
+
 [node red 프로그램]
 ```
 [
