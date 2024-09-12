@@ -1119,6 +1119,7 @@ void loop() {
 다음은 node red 프로그램 입니다. 스위가 켜지면 "스위치가 켜졌습니다." 하고 오디오로 출력이 나가고 스위가 꺼지면 "스위치가 꺼졌습니다." 하고 오디오로 출력하는 프로그램 만들어줘
 ```
 [결과 프로그램]
+<img src="https://github.com/user-attachments/assets/387555c1-d6ac-4783-afcb-497125bfe703" alt="연습문제1" width="200">
 ```
 [
     {
