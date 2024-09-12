@@ -1242,5 +1242,170 @@ void loop() {
     }
 ]
 ```
+### [프로젝트] 스위치로 i2r-03 보드 on off 제어하기
+다음은 node red 소스 프로그램 입니다. topic 과 맥 어드레스는 수정해서 입력하면 보유한 IoT-PLC를 제어 할 수 있습니다.
 
+```
+[
+    {
+        "id": "e0ccba070e41516f",
+        "type": "ui_switch",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "3e39067bccc61553",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":true}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":false}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "16036357d7953f7c"
+            ]
+        ]
+    },
+    {
+        "id": "ef2789e281a654aa",
+        "type": "inject",
+        "z": "16808b1eb2fdb744",
+        "name": "on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":true}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "16036357d7953f7c"
+            ]
+        ]
+    },
+    {
+        "id": "16036357d7953f7c",
+        "type": "mqtt out",
+        "z": "16808b1eb2fdb744",
+        "name": "",
+        "topic": "i2r/a/in",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b091c9249183897c",
+        "x": 350,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0f782ff329062e9a",
+        "type": "inject",
+        "z": "16808b1eb2fdb744",
+        "name": "off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":false}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "16036357d7953f7c"
+            ]
+        ]
+    },
+    {
+        "id": "3e39067bccc61553",
+        "type": "ui_group",
+        "name": "스위치",
+        "tab": "d83f9ecf636984b5",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b091c9249183897c",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ai.doowon.ac.kr",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d83f9ecf636984b5",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
+```
 
