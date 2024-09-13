@@ -1410,4 +1410,307 @@ topic은 "i2r/email/in" 여기에 email은 어플에서 블루투스로 정보�
     }
 ]
 ```
-
+# Remote-RED
+```
+[
+    {
+        "id": "4595b4555ae50c3a",
+        "type": "mqtt out",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "topic": "i2r/kdi6033@gmail.com/in",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f15d66b3.c7edf8",
+        "x": 450,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "593b80907d283a61",
+        "type": "ui_switch",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "3e39067bccc61553",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":true}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"mac\":\"A0:A3:B3:0D:8F:54\",\"order\":2,\"no\":1,\"value\":false}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "4595b4555ae50c3a"
+            ]
+        ]
+    },
+    {
+        "id": "24fd0712d0caec23",
+        "type": "mqtt in",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "topic": "i2r/kdi6033@gmail.com/out",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "f15d66b3.c7edf8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "80936eaccdb8fcd8"
+            ]
+        ]
+    },
+    {
+        "id": "8e6ef4af57a25e22",
+        "type": "ui_gauge",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "group": "3e39067bccc61553",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "온도",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 810,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "80936eaccdb8fcd8",
+        "type": "json",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [
+                "b4cdc55ca8e7eee1",
+                "b2a81fe0eb374e05",
+                "d721b1b0e64e3bcb"
+            ]
+        ]
+    },
+    {
+        "id": "b4cdc55ca8e7eee1",
+        "type": "function",
+        "z": "0df6564762a7dd10",
+        "name": "function 1",
+        "func": "var newMsg={};\nnewMsg.payload = msg.payload.temp;\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "8e6ef4af57a25e22"
+            ]
+        ]
+    },
+    {
+        "id": "4a0391a494e09ab2",
+        "type": "ui_gauge",
+        "z": "0df6564762a7dd10",
+        "name": "",
+        "group": "3e39067bccc61553",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "습도",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "70",
+        "diff": false,
+        "className": "",
+        "x": 810,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b2a81fe0eb374e05",
+        "type": "function",
+        "z": "0df6564762a7dd10",
+        "name": "function 2",
+        "func": "var newMsg={};\nnewMsg.payload = msg.payload.humi;\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 320,
+        "wires": [
+            [
+                "4a0391a494e09ab2"
+            ]
+        ]
+    },
+    {
+        "id": "f33df5d02afdd23a",
+        "type": "ui_led",
+        "z": "0df6564762a7dd10",
+        "order": 3,
+        "group": "3e39067bccc61553",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 810,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d721b1b0e64e3bcb",
+        "type": "function",
+        "z": "0df6564762a7dd10",
+        "name": "function 3",
+        "func": "var newMsg={};\nif(msg.payload.in[0] === 1)\n    newMsg.payload = true;\nelse \n    newMsg.payload = false;\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 380,
+        "wires": [
+            [
+                "f33df5d02afdd23a"
+            ]
+        ]
+    },
+    {
+        "id": "f15d66b3.c7edf8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ai.doowon.ac.kr",
+        "port": "1883",
+        "tls": "509a45a9.089bbc",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3e39067bccc61553",
+        "type": "ui_group",
+        "name": "스위치",
+        "tab": "d83f9ecf636984b5",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "509a45a9.089bbc",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "94191b3ef7-certificate.pem.crt",
+        "keyname": "94191b3ef7-private.pem.key",
+        "caname": "MtestCA.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "d83f9ecf636984b5",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
+```
