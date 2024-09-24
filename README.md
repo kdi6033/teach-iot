@@ -496,7 +496,7 @@ void loop() {
   }
 }
 ```
-위에서 작성한 프로그램을 node red로  통신을 주고 받을 수 있습니다.
+위에서 작성한 프로그램을 node red로  통신을 주고 받을 수 있습니다.    
 ![node-red-6-1](https://github.com/user-attachments/assets/3fcbda0b-ad9b-4d43-801b-c02386521c86)
 
 [node red 6-1]
