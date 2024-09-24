@@ -1207,7 +1207,7 @@ void loop() {
 여기서 상태 변화가 있으면 for loop가 끝나고 in0 in1 in2 in3 4개의 값을 보내줘
 ```
 
-[생성된 프로그램]
+[생성된 프로그램-9]
 ```
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -1390,6 +1390,420 @@ void loop() {
   // 짧은 지연 (50ms)
   delay(50);
 }
+```
+[node ed-9]
+```
+[
+    {
+        "id": "a9ac1b37b127160c",
+        "type": "tab",
+        "label": "플로우 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "85490e0a89c838b6",
+        "type": "mqtt out",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "kdi6033/intopic/",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f15d66b3.c7edf8",
+        "x": 480,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "f8bab0db1d0cd3d2",
+        "type": "inject",
+        "z": "a9ac1b37b127160c",
+        "name": "on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"no\":0,\"value\":1}",
+        "payloadType": "json",
+        "x": 290,
+        "y": 340,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "9092e9f573c32277",
+        "type": "inject",
+        "z": "a9ac1b37b127160c",
+        "name": "off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"no\":0,\"value\":0}",
+        "payloadType": "json",
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "3d87e254c4a9d30e",
+        "type": "ui_switch",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "24d574f63dfe7dbd",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"no\":0,\"value\":1}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"no\":0,\"value\":0}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 290,
+        "y": 420,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "bfc40597ee4708d4",
+        "type": "mqtt in",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "kdi6033/outtopic/",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "f15d66b3.c7edf8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "b3a8a72e0ea8ae52"
+            ]
+        ]
+    },
+    {
+        "id": "b3a8a72e0ea8ae52",
+        "type": "switch",
+        "z": "a9ac1b37b127160c",
+        "name": "input switch",
+        "property": "payload.input",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 480,
+        "y": 520,
+        "wires": [
+            [
+                "96da919d6a386efb"
+            ],
+            [
+                "0edae1a9207a25dc"
+            ],
+            [
+                "8f4f5dceb4db0841"
+            ],
+            [
+                "c4ebc29d1e8161f4"
+            ]
+        ]
+    },
+    {
+        "id": "393806492248311b",
+        "type": "ui_led",
+        "z": "a9ac1b37b127160c",
+        "order": 4,
+        "group": "24d574f63dfe7dbd",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "LED 1",
+        "x": 790,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "0edae1a9207a25dc",
+        "type": "ui_led",
+        "z": "a9ac1b37b127160c",
+        "order": 4,
+        "group": "24d574f63dfe7dbd",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "LED 2",
+        "x": 670,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8f4f5dceb4db0841",
+        "type": "ui_led",
+        "z": "a9ac1b37b127160c",
+        "order": 4,
+        "group": "24d574f63dfe7dbd",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "LED 3",
+        "x": 670,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "c4ebc29d1e8161f4",
+        "type": "ui_led",
+        "z": "a9ac1b37b127160c",
+        "order": 4,
+        "group": "24d574f63dfe7dbd",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "LED 4",
+        "x": 670,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "283a3e60409ad5f0",
+        "type": "debug",
+        "z": "a9ac1b37b127160c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "96da919d6a386efb",
+        "type": "function",
+        "z": "a9ac1b37b127160c",
+        "name": "function 1",
+        "func": "var newMsg={};\nnewMsg.payload=msg.payload.state;\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 500,
+        "wires": [
+            [
+                "393806492248311b",
+                "283a3e60409ad5f0"
+            ]
+        ]
+    },
+    {
+        "id": "f15d66b3.c7edf8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ai.doowon.ac.kr",
+        "port": "1883",
+        "tls": "509a45a9.089bbc",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "24d574f63dfe7dbd",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "85c97a9d66e16334",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "509a45a9.089bbc",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-certificate.pem.crt",
+        "keyname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "85c97a9d66e16334",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
 ```
 # Node RED
 다음 그림은 스위치의 동작에 따라 Led 가 on off 합니다. 이것을 ChatGPT를 이용해 간단하게 오디오 음성으로 출력을 내보내는 프로그램을 만들어 보겠습니다.
