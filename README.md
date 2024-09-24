@@ -1,7 +1,7 @@
 # teach-iot
 [교육지원사이트 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)    
 
-[ChatGPT]    
+[ChatGPT-1]    
 ```
 esp32 wroom 을 이용해서 온도와 습도를 측정하는 프로그램 만들어줘 온습도 센서는 aht21 을 사용했습니다.
 ```
