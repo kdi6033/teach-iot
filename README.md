@@ -495,7 +495,142 @@ void loop() {
     client.publish(inTopic, message.c_str());
   }
 }
+```
+위에서 작성한 프로그램을 node red로  통신을 주고 받을 수 있습니다.
 
+[node red 6-1]
+```
+![node-red-6-1](https://github.com/user-attachments/assets/16b5e88d-bc82-4084-834e-56634df29ee8)
+
+[
+    {
+        "id": "c90c9f5839e6880e",
+        "type": "mqtt in",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "outtopic/",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "f15d66b3.c7edf8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 300,
+        "y": 140,
+        "wires": [
+            [
+                "76ab67d0f2b4f90c"
+            ]
+        ]
+    },
+    {
+        "id": "76ab67d0f2b4f90c",
+        "type": "debug",
+        "z": "a9ac1b37b127160c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "85490e0a89c838b6",
+        "type": "mqtt out",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "intopic/",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f15d66b3.c7edf8",
+        "x": 480,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f8bab0db1d0cd3d2",
+        "type": "inject",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "김동일 보냄",
+        "payloadType": "str",
+        "x": 290,
+        "y": 220,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "f15d66b3.c7edf8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ai.doowon.ac.kr",
+        "port": "1883",
+        "tls": "509a45a9.089bbc",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "509a45a9.089bbc",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-certificate.pem.crt",
+        "keyname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]
 ```
 [ChatGPT-7] 
 ```
