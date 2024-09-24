@@ -875,6 +875,220 @@ void loop() {
   client.loop();
 }
 ```
+node red에서 스위치 하나로 보드의 출력을 제어 하는 프로그램 입니다. 이를 테스트 해보고 4개의 스위치로 완성해 보세요.    
+![nodered7](https://github.com/user-attachments/assets/6a687d8e-63e8-4f1e-af5a-dacfe32ceba1)
+
+[node red 7]
+```
+[
+    {
+        "id": "c90c9f5839e6880e",
+        "type": "mqtt in",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "outtopic/",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "f15d66b3.c7edf8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "76ab67d0f2b4f90c"
+            ]
+        ]
+    },
+    {
+        "id": "76ab67d0f2b4f90c",
+        "type": "debug",
+        "z": "a9ac1b37b127160c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "85490e0a89c838b6",
+        "type": "mqtt out",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "topic": "intopic/",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f15d66b3.c7edf8",
+        "x": 440,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f8bab0db1d0cd3d2",
+        "type": "inject",
+        "z": "a9ac1b37b127160c",
+        "name": "on",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"no\":0,\"value\":1}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 220,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "9092e9f573c32277",
+        "type": "inject",
+        "z": "a9ac1b37b127160c",
+        "name": "off",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"no\":0,\"value\":0}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "3d87e254c4a9d30e",
+        "type": "ui_switch",
+        "z": "a9ac1b37b127160c",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "24d574f63dfe7dbd",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"no\":0,\"value\":1}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"no\":0,\"value\":0}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "85490e0a89c838b6"
+            ]
+        ]
+    },
+    {
+        "id": "f15d66b3.c7edf8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ai.doowon.ac.kr",
+        "port": "1883",
+        "tls": "509a45a9.089bbc",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "24d574f63dfe7dbd",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "85c97a9d66e16334",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "509a45a9.089bbc",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-certificate.pem.crt",
+        "keyname": "994029d689d1e0812df9e162610c9df73501214f79d8a5005f64717a8fadd899-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "85c97a9d66e16334",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
+```
 [ChatGPT-8] 
 ```
 이 프로그램에서 입력포트를 감시하다가
