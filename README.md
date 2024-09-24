@@ -67,7 +67,7 @@ void setup() {
 void loop() {
 }
 ```
-[ChatGPT]    
+[ChatGPT-2]    
 ```
 // Output pin numbers
 const int outputPins[4] = {26, 27, 32, 33};
@@ -97,7 +97,7 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
-[ChatGPT] 
+[ChatGPT-3] 
 ```
 // Output pin numbers
 const int outputPins[4] = {26, 27, 32, 33};
@@ -134,7 +134,7 @@ void loop() {
   delay(10);  // 짧은 대기 시간으로 입력 상태 지속적으로 확인
 }
 ```
-[ChatGPT] 
+[ChatGPT-4] 
 ```
 esp32 wroom 와이파이 연결해줘 ssid=academy5 pw는 없음 학국시간 1초 간격으로 표시해줘
 ```
@@ -190,7 +190,7 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
-[ChatGPT] 
+[ChatGPT-5] 
 ```
 앞에 프로그램 매일 13시15분부터 13시16분까지  26번 포트 on으로 출력하게 프로그램 해줘
 ```
@@ -263,7 +263,7 @@ void loop() {
 ```
 
 # MQTT 통신    
-[ChatGPT] 
+[ChatGPT-6] 
 ```
 브로커=ai.doowon.ac.kr 와이파이정보 ssid=academy5 pw=없음 intopic=intopic/ outtopic=outtopic mqtt 5초에 한번 씩 "김동일" 메세비보내는 통신 프로그램 만들어줘
 ```
@@ -377,7 +377,7 @@ void loop() {
   }
 }
 ```
-[ChatGPT] 
+[ChatGPT-7] 
 ```
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -616,7 +616,7 @@ void loop() {
   client.loop();
 }
 ```
-[ChatGPT] 
+[ChatGPT-8] 
 ```
 이 프로그램에서 입력포트를 감시하다가
 // Input pin numbers
@@ -802,7 +802,7 @@ void loop() {
   delay(50);
 }
 ```
-[ChatGPT] 
+[ChatGPT-9] 
 ```
 // 각 입력 핀 상태를 읽고, 변경된 경우만 MQTT로 발행
   for (int i = 0; i < 4; i++) {
