@@ -1010,15 +1010,13 @@ mqtt outtopic 으로 publish 해줘
 ```
 [생성된 프로그램]  
 ```
-const char* ssid = "academy5";
-const char* password = "";
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>  // JSON 처리를 위한 라이브러리
 
 // WiFi 정보
-const char* ssid = "i2r";
-const char* password = "00000000";
+const char* ssid = "academy5";
+const char* password = "";
 
 // MQTT 브로커 정보
 const char* mqtt_server = "ai.doowon.ac.kr";
