@@ -1,6 +1,7 @@
 # teach-iot
 [교육지원사이트 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)    
 
+### 1. 온도 습도 측정 프로그램램
 [ChatGPT-1]    
 ```
 esp32 wroom 을 이용해서 온도와 습도를 측정하는 프로그램 만들어줘 온습도 센서는 aht21 을 사용했습니다.
@@ -67,6 +68,7 @@ void setup() {
 void loop() {
 }
 ```
+### 2. i2r-03 IoT PLC 출력 프로그램
 [ChatGPT-2]    
 ```
 // Output pin numbers
@@ -97,6 +99,7 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
+### 3. i2r-03 IoT PLC 입력 출력 연동 프로그램램
 [ChatGPT-3] 
 ```
 // Output pin numbers
@@ -134,6 +137,7 @@ void loop() {
   delay(10);  // 짧은 대기 시간으로 입력 상태 지속적으로 확인
 }
 ```
+### 4. i2r-03 IoT PLC 와이파이 연결결
 [ChatGPT-4] 
 ```
 esp32 wroom 와이파이 연결해줘 ssid=academy5 pw는 없음 학국시간 1초 간격으로 표시해줘
@@ -190,6 +194,7 @@ void loop() {
   delay(1000);  // 1초 대기
 }
 ```
+### 5. i2r-03 IoT PLC 동작시간 설정정
 [ChatGPT-5] 
 ```
 앞에 프로그램 매일 13시15분부터 13시16분까지  26번 포트 on으로 출력하게 프로그램 해줘
@@ -262,7 +267,7 @@ void loop() {
 }
 ```
 
-# MQTT 통신    
+### 6. i2r-03 IoT PLC MQTT 통신    
 [ChatGPT-6] 
 ```
 브로커=ai.doowon.ac.kr 와이파이정보 ssid=academy5 pw=없음 intopic=intopic/ outtopic=outtopic/ mqtt 5초에 한번 씩 "김동일" 메세지보내는 통신 프로그램 만들어줘
@@ -636,7 +641,7 @@ void loop() {
     }
 ]
 ```
-### 7. i2r-03 보드 출력제어
+### 7. i2r-03 IoT PLC 원격 출력제어
 [ChatGPT-7] 
 ```
 위 프로그램에 
@@ -999,6 +1004,7 @@ node red에서 스위치 하나로 보드의 출력을 제어 하는 프로그�
     }
 ]
 ```
+### 8. i2r-03 IoT PLC 원격 모니터링링
 보드에서 입력이 변경될 때마다 mqtt 통신으로 nodr red 에 전달하는 프로그램을 만들겠습니다.
 node red 프로그램은 앞에서 작성한 것을 사용하면 되겠습니다.    
 [ChatGPT-8] 
@@ -1183,6 +1189,7 @@ void loop() {
 }
 
 ```
+### 9. i2r-03 IoT PLC 트리거거 원격 모니터링
 [ChatGPT-9] 
 ```
 // 각 입력 핀 상태를 읽고, 변경된 경우만 MQTT로 발행
@@ -1806,7 +1813,8 @@ void loop() {
     }
 ]
 ```
-# Node RED
+
+### 10. Node RED 음성출력
 다음 그림은 스위치의 동작에 따라 Led 가 on off 합니다. 이것을 ChatGPT를 이용해 간단하게 오디오 음성으로 출력을 내보내는 프로그램을 만들어 보겠습니다.
 <img src="https://github.com/user-attachments/assets/4aaa9657-a041-4de6-a86d-0b6ec39ab798" alt="연습문제1" width="200">
 
