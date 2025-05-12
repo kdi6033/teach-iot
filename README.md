@@ -16,10 +16,13 @@ const int mqtt_port = 1883;
 
 // MQTT 토픽
 const char* outTopic = "i2r/kdi6033@gmail.com/out";   // publish용
-const char* inTopic = "i2r/kdi6033@gmail.com/in";   // subscribe용
+const char* inTopic = "i2r/kdi6033@gmail.com/in";     // subscribe용
 
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+// 제어할 출력 핀
+const int relayPin = 26;
 
 void setup_wifi() {
   delay(10);
@@ -44,10 +47,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("📥 수신 [");
   Serial.print(topic);
   Serial.print("]: ");
+  
+  String msg;
   for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
+    char c = (char)payload[i];
+    Serial.print(c);
+    msg += c;
   }
   Serial.println();
+
+  // 메시지 내용 확인
+  if (msg.indexOf("\"order\":1") != -1) {
+    digitalWrite(relayPin, HIGH); // 릴레이 ON
+    Serial.println("🔔 릴레이 ON");
+  } else if (msg.indexOf("\"order\":2") != -1) {
+    digitalWrite(relayPin, LOW);  // 릴레이 OFF
+    Serial.println("🔕 릴레이 OFF");
+  }
 }
 
 // MQTT 재연결 루틴
@@ -59,7 +75,7 @@ void reconnect() {
 
     if (client.connect(clientId.c_str())) {
       Serial.println("✅ 연결 성공");
-      client.subscribe(inTopic);  // 지정된 inTopic 구독
+      client.subscribe(inTopic);
     } else {
       Serial.print("❌ 실패, 상태: ");
       Serial.print(client.state());
@@ -71,6 +87,9 @@ void reconnect() {
 
 void setup() {
   Serial.begin(115200);
+  pinMode(relayPin, OUTPUT);       // 릴레이 핀 출력 모드
+  digitalWrite(relayPin, LOW);     // 초기 OFF 상태
+
   setup_wifi();
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
@@ -81,18 +100,8 @@ void loop() {
     reconnect();
   }
   client.loop();
-
-  // 10초마다 메시지 발행
-
-  static unsigned long lastMsg = 0;
-  if (millis() - lastMsg > 10000) {
-    lastMsg = millis();
-    String msg = "{\"order\":1}";
-    client.publish(outTopic, msg.c_str());
-    Serial.print("📤 발행: ");
-    Serial.println(msg);
-  }
 }
+
 ```
 
 ### react 프로그램
@@ -102,7 +111,7 @@ import React, { useEffect, useState } from 'react';
 import mqtt from 'mqtt';
 import './App.css';
 
-const MQTT_BROKER = 'ws://mqtt.i2r.link:8080'; // WebSocket용 포트 사용
+const MQTT_BROKER = 'ws://mqtt.i2r.link:8080'; // WebSocket 포트
 const OUT_TOPIC = 'i2r/kdi6033@gmail.com/in';
 const IN_TOPIC = 'i2r/kdi6033@gmail.com/out';
 
@@ -138,9 +147,10 @@ function App() {
     };
   }, []);
 
-  const sendMessage = () => {
+  // ✅ 매개변수로 order 값 받도록 수정
+  const sendMessage = (order: number) => {
     if (client?.connected) {
-      const payload = JSON.stringify({ order: 1 });
+      const payload = JSON.stringify({ order });
       client.publish(OUT_TOPIC, payload);
       console.log(`📤 전송됨: ${payload}`);
     } else {
@@ -153,14 +163,14 @@ function App() {
       <header className="App-header">
         김동일 MQTT 테스트
         <br />
-        <button onClick={sendMessage}>Send {"{order:1}"}</button>
+        <button onClick={() => sendMessage(1)}>Send {"{order:1}"}</button>
+        <button onClick={() => sendMessage(2)}>Send {"{order:2}"}</button>
       </header>
     </div>
   );
 }
 
 export default App;
-
 ```
 
 
