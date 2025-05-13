@@ -24,6 +24,11 @@ PubSubClient client(espClient);
 // 제어할 출력 핀
 const int relayPin = 26;
 
+// 주기적 메시지 발송용 변수
+unsigned long lastSendTime = 0;
+const unsigned long sendInterval = 10000; // 10초
+int count = 0;
+
 void setup_wifi() {
   delay(10);
   Serial.println();
@@ -100,6 +105,18 @@ void loop() {
     reconnect();
   }
   client.loop();
+
+  // 10초마다 count 값을 증가시키며 MQTT 발행
+  unsigned long currentMillis = millis();
+  if (currentMillis - lastSendTime >= sendInterval) {
+    lastSendTime = currentMillis;
+    count++;
+
+    String payload = "{\"count\": " + String(count) + "}";
+    client.publish(inTopic, payload.c_str());
+    Serial.print("📤 전송: ");
+    Serial.println(payload);
+  }
 }
 
 ```
