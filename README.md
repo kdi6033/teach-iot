@@ -1,5 +1,9 @@
 # teach-iot
-[교육지원사이트 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)    
+[교육지원사이트 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)      
+
+과제 제출
+다음 사이트를 참조해서 과제를 제출하세요
+https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0
 
 ### 아두이노 mqtt 프로그램
 ```
