@@ -10,7 +10,7 @@ https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0
 ## 프로그램 진행 순서
 - 아두이노 설치와 기초 프로그램
 - AWS 계정 개설
-- Ubuntu 설치
+- [Ubuntu 설치](https://www.youtube.com/watch?v=n1MRXSVtbBI)
 - MQTT 설치
 
 ### 아두이노 mqtt 프로그램
