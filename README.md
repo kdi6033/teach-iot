@@ -1,9 +1,16 @@
 # teach-iot
 [교육지원사이트 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)      
+chatGPT Open AI를 개설했습니다. 제가 프로그램한 정보가 모두 담겨 있으니 이 지식을 시작으로 바이브 코딩을 시작하세요.
+[i2r IoT PLC & Sensor](https://chatgpt.com/g/g-68fa17b36d3c819192a564d30d299395-i2r-iot-plc-sensor)
 
 과제 제출
 다음 사이트를 참조해서 과제를 제출하세요    
 https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0
+
+## 프로그램 진행 순서
+- AWS 계정 개설
+- Ubuntu 설치
+- MQTT 설치
 
 ### 아두이노 mqtt 프로그램
 ```
