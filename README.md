@@ -8,9 +8,11 @@ chatGPT Open AI를 개설했습니다. 제가 프로그램한 정보가 모두 �
 https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0
 
 🌐 i2r IoT Cloud Server 구축 매뉴얼
+
 Nginx + Mosquitto + MongoDB + Node.js 통합 설치 가이드
 
 🧩 개요
+
 이 문서는 Ubuntu 서버에
 다음 3가지 서비스를 동시에 설치하여
 IoT 시스템을 통합 운용하는 방법을 설명합니다.
