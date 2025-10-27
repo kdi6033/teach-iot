@@ -28,12 +28,9 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install git curl vim ufw net-tools -y
 ```
 ⚙️ 2️⃣ MongoDB 설치 및 실행
-```
-sudo apt install mongodb -y
-sudo systemctl enable mongodb
-sudo systemctl start mongodb
-sudo systemctl status mongodb
-```
+다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
+유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
+메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
 ⚙️ 3️⃣ Node.js + PM2 백엔드 구성
 ```
