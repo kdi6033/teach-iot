@@ -32,8 +32,10 @@ sudo apt install git curl vim ufw net-tools -y
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
 메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
-⚙️ 3️⃣ Node.js 설치 
-✅ 1. Node.js 설치 (최신 LTS 버전)
+⚙️ 3️⃣ Node.js 설치   
+
+✅ 1. Node.js 설치 (최신 LTS 버전)    
+
 Node.js는 공식 설치 스크립트를 통해 설치하는 것이 가장 안전합니다.
 
 🔹 터미널 명령어:
