@@ -32,11 +32,43 @@ sudo apt install git curl vim ufw net-tools -y
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
 메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
-⚙️ 3️⃣ Node.js + PM2 백엔드 구성
+⚙️ 3️⃣ Node.js 설치 
+✅ 1. Node.js 설치 (최신 LTS 버전)
+Node.js는 공식 설치 스크립트를 통해 설치하는 것이 가장 안전합니다.
+
+🔹 터미널 명령어:
 ```
-sudo apt install nodejs npm -y
-sudo npm install -g pm2
+# 필수 도구 설치
+sudo apt update
+sudo apt install curl -y
+
+# NodeSource 저장소 등록 (LTS 최신)
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+
+# Node.js 설치
+sudo apt install -y nodejs
 ```
+🔸 설치 확인
+```
+node -v     # 예: v18.x.x 또는 v20.x.x
+npm -v      # 예: 9.x.x
+```
+
+✅ 2. TypeScript 전역 설치
+TypeScript는 npm으로 설치합니다.
+```
+sudo npm install -g typescript
+```
+🔸 설치 확인
+```
+tsc -v      # 예: Version 5.x.x
+```
+📦 선택: ts-node, nodemon도 함께 설치하면 자동 재시작하여 편리
+```
+sudo npm install -g ts-node nodemon
+```
+ts-node: .ts 파일을 바로 실행
+nodemon: 자동 리로드 (서버 개발 시 유용)
 
 📁 프로젝트 폴더 생성
 ```
@@ -65,11 +97,21 @@ app.get('/api/health', (_, res) => res.json({ ok: true, time: new Date().toISOSt
 
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
 ```
-✅ PM2 실행
+✅ backend db-server.js 부팅시 자동실행 설정
+컴퓨터가 부팅시 자동으로 실행 하도롤 설정한다.
 ```
-pm2 start db-server.js --name db-server
-pm2 save
-pm2 startup
+sudo npm install -g pm2
+sudo pm2 start db-server.js --name db-server
+sudo pm2 save
+sudo pm2 startup
+```
+프로그램 수정을 할 경우는 다음과 같이 다시 실행한다.
+```
+sudo pm2 restart db-server
+```
+pm2 실행 중인것을 보려면
+```
+sudo pm2 list
 ```
 
 ⚙️ 4️⃣ Mosquitto (MQTT 브로커) 설치
