@@ -216,9 +216,10 @@ curl -i https://test.i2r.link/api/health
 
 🎯 요약
 
-Ubuntu 한 대의 서버에
-Nginx (HTTPS/WebSocket Proxy),
+하나의 Ubuntu 서버에서
+Nginx (웹서버 & HTTPS 프록시),
 Mosquitto (MQTT Broker),
-MongoDB + Node.js (데이터베이스 + API)
-를 통합하여 i2r IoT 시스템을 완성합니다.
+MongoDB + Node.js (데이터 저장 & API)
+를 통합하여 IoT 센서 데이터를 수집·시각화·제어하는
+완전한 i2r Cloud 환경을 구축할 수 있습니다. 🚀
 
