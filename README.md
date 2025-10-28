@@ -154,14 +154,60 @@ sudo systemctl restart nginx
 ✅ 확인
 브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다. 처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
 
-⚙️ 5️⃣ HTTPS 설정, 인증서 설치
+⚙️ 5️⃣ HTTPS 설정, 인증서 설치    
+
 ✅ Certbot 설치 (Nginx용)
 ```
 sudo apt update
 sudo apt install certbot python3-certbot-nginx -y
 ```
+✅ 점검 포인트 (필수)
+sites-enabled 링크/중복 설정 정리
+```
+# default 끄기(충돌 방지)
+sudo rm -f /etc/nginx/sites-enabled/default
 
+# 현재 conf가 링크되어 있는지 확인
+ls -l /etc/nginx/sites-enabled/
+```
 
+✅ Nginx 서버 설정에 server_name 명확히 설정되었는지 확인
+```
+sudo nano /etc/nginx/sites-available/test.i2r.link.conf
+```
+Nginx 다시 시작
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+✅ HTTPS 인증서 발급 및 자동 설정
+```
+sudo certbot --nginx -d test.i2r.link 
+```
+🚀 진행 중 아래와 같은 질문에 다음처럼 대답하세요:
+
+이메일 입력 → 본인 이메일 입력
+
+약관 동의 → Yes
+
+마케팅 메일 수신 → No
+
+HTTP → HTTPS 리디렉션 → 2번 (Redirect) 선택 권장
+
+✅ 자동 갱신 설정 확인
+Let's Encrypt 인증서는 90일짜리입니다. 자동 갱신을 위해 crontab 등록 상태 확인:
+```
+sudo systemctl status certbot.timer
+```
+보통 설치 시 자동 등록되어 있으며, 없다면 수동으로 추가해도 됩니다:
+```
+sudo crontab -e
+```
+맨 아래에 추가:
+```
+0 3 * * * certbot renew --quiet
+```
 
 
 
