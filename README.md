@@ -229,12 +229,6 @@ Nginx 설정도 자동으로 아래처럼 추가됩니다
     ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
 ```
 
-
-
-
-
-
-
 ⚙️ 5️⃣ HTTPS 설정
 📄 /etc/nginx/sites-available/test.i2r.link.conf
 ```
@@ -309,6 +303,30 @@ mosquitto_pub -h localhost -p 1883 -t test/topic -m "Hello MQTT"
 🧩 Node.js API
 ```
 curl -i https://test.i2r.link/api/health
+```
+
+
+⚙️ 8️⃣ Iot 서버 프로그램 AWS에 설치    
+서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
+✅backend : db-server.js 를 구동하고 시스템이 동작하면 자동으로 실행되게 한다.    
+- 데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
+
+[PM2 설정](https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95)
+
+✅frontend : react로 구성한 홈페이지 프로그램으로 "npm run build"로 build 를 만들고 AWS 서버의 html 디렉토리에 업로드 한다.    
+[IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
+
+[IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
+
+✅ 4. 서비스 동작 확인
+db-server.js 의 api 명령을 하나 실행해 봅니다. test.i2r.link 은 자신의 DNS를 입력하세요
+예시:
+```
+curl -s -X POST https://test.i2r.link/api/records -k
+```
+응답: 저장되어 있는 데이터가 출력된다.
+```
+[{"_id":"6823eef0dec9a7b8b45ce2de","name":"a","temp":"27"},{"_id":"6823ef5cdec9a7b8b45ce2df","name":"a","temp":"27"}]
 ```
 
 🧱 시스템 전체 구조
