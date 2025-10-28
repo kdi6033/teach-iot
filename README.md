@@ -208,17 +208,34 @@ sudo crontab -e
 ```
 0 3 * * * certbot renew --quiet
 ```
+✅ 성공 시 확인
 
-
-
-
-
-
-⚙️ 5️⃣ Nginx 설치 및 HTTPS 설정
+설치가 완료되면 /etc/letsencrypt/live/test.i2r.link/ 폴더가 생깁니다:
 ```
-sudo apt install nginx certbot python3-certbot-nginx -y
+sudo ls -l /etc/letsencrypt/live/test.i2r.link/
 ```
 
+파일 예시:
+```
+cert.pem
+chain.pem
+fullchain.pem
+privkey.pem
+```
+Nginx 설정도 자동으로 아래처럼 추가됩니다
+/etc/nginx/sites-available/test.i2r.link.conf
+```
+    ssl_certificate /etc/letsencrypt/live/test.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
+```
+
+
+
+
+
+
+
+⚙️ 5️⃣ HTTPS 설정
 📄 /etc/nginx/sites-available/test.i2r.link.conf
 ```
 # ① MQTT WebSocket Secure Proxy
@@ -276,16 +293,6 @@ sudo ln -s /etc/nginx/sites-available/test.i2r.link.conf /etc/nginx/sites-enable
 sudo nginx -t
 sudo systemctl reload nginx
 ```
-
-⚙️ 6️⃣ SSL 인증서 발급 (Let’s Encrypt)
-```
-sudo certbot certonly --nginx -d test.i2r.link
-sudo systemctl status certbot.timer
-```
-
-✅ 자동 갱신 활성화
-✅ /etc/letsencrypt/live/test.i2r.link/fullchain.pem 사용
-
 
 🧪 8️⃣ 테스트
 🧠 MQTT (내부)
