@@ -141,6 +141,33 @@ protocol websockets
 1883 → IoT 디바이스 (MQTT TCP)    
 8080 → WebSocket (Nginx에서 WSS로 프록시됨)
 
+⚙️ 5️⃣ Nginx 설치 
+```
+sudo apt update
+sudo apt install nginx -y
+```
+홈페이지 수정 후에는 
+Nginx 서비스 재시작
+```
+sudo systemctl restart nginx
+```
+✅ 확인
+브라우저에서 http://your-ec2-ip 접속 시 React 웹 앱이 보이면 성공입니다. 처음 공부하는 분들은 여기까지 해서 홈페이지를 접속하시고 다음 과정은 나중에 진행 하세요
+
+⚙️ 5️⃣ HTTPS 설정, 인증서 설치
+✅ Certbot 설치 (Nginx용)
+```
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+
+
+
+
+
+
+
 ⚙️ 5️⃣ Nginx 설치 및 HTTPS 설정
 ```
 sudo apt install nginx certbot python3-certbot-nginx -y
