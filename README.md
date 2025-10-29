@@ -122,7 +122,9 @@ sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
 ```
 
-📄 /etc/mosquitto/mosquitto.conf
+📄 /etc/mosquitto/mosquitto.conf    
+
+sudo nano /etc/mosquitto/mosquitto.conf
 ```
 persistence true
 persistence_location /var/lib/mosquitto/
