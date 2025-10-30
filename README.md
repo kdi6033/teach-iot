@@ -192,11 +192,13 @@ curl -i http://localhost:1804/api/health
 
 ----------------------------
 📡 4️⃣ Mosquitto 설치 (MQTT 브로커)    
+모스키토 설치 및 자동실행
 ```
 sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
+sudo systemctl restart mosquitto
 ``` 
-📄 nano /etc/mosquitto/mosquitto.conf
+📄 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 persistence true
 allow_anonymous true
@@ -205,6 +207,13 @@ protocol mqtt
 
 listener 8080
 protocol websockets
+
+include_dir /etc/mosquitto/conf.d
+```
+
+적용
+```
+sudo systemctl restart mosquitto
 ```
 
 ✅ 테스트
@@ -341,9 +350,11 @@ sudo pm2 list
 ```
 
 ⚙️ 4️⃣ Mosquitto (MQTT 브로커) 설치
+설치 및 자동실행 설정
 ```
 sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
+sudo systemctl restart mosquitto
 ```
 
 📄 /etc/mosquitto/mosquitto.conf    
@@ -351,15 +362,15 @@ sudo systemctl enable mosquitto
 sudo nano /etc/mosquitto/mosquitto.conf
 ```
 persistence true
-persistence_location /var/lib/mosquitto/
-log_dest file /var/log/mosquitto/mosquitto.log
-
 allow_anonymous true
+
 listener 1883
 protocol mqtt
 
 listener 8080
 protocol websockets
+
+include_dir /etc/mosquitto/conf.d
 ```
 
 ✅ 기본 포트
