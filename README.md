@@ -133,14 +133,29 @@ https://test9.i2r.link
 ✅ 화면: test8.i2r.link OK
 
 ---------------------------
-🧩 3️⃣ Node.js 설치 및 API 서버 구축
+🧩 3️⃣ Node.js 설치 및 API 서버 구축    
+```
 sudo apt install curl -y
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 node -v && npm -v
 sudo npm install -g pm2
+```
+
+✅ 1) backend 디렉토리 생성
+현재 디렉토리가 ubutu 임을 확인 후 여기에 backend 생성
+```
+pwd
+mkdir ~/backend
+```
+
+
+✅ 2) db-server.js 파일 생성 및 내용 넣기
+nano 편집기로 열기
+nano ~/backend/db-server.js
 
 📄 db-server.js
+```
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
@@ -154,6 +169,7 @@ const MONGO_URL = 'mongodb://127.0.0.1:27017';
 const DB_NAME = 'local';
 app.get('/api/health', (_, res) => res.json({ ok: true, time: new Date().toISOString() }));
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+```
 
 📦 실행
 pm2 start db-server.js --name db-server
