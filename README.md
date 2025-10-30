@@ -52,13 +52,110 @@ http://18.212.214.14.nip.io
 ````
 
 -----------------
-⚙️ 3️⃣ HTTPS 인증서 설정 (Certbot)    
+⚙️ 3️⃣ HTTPS 인증서 설정 (Certbot 설치)    
 
-여기서는 AWS Rout 53 에서 test4.i2r.link 로 발급해 이것으로 기술 하겠습니다. 18.212.214.14.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요
+여기서는 AWS Rout 53 에서 test8.i2r.link 로 발급해 이것으로 기술 하겠습니다. 18.212.214.14.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요
 ```
+sudo apt update
 sudo apt install certbot python3-certbot-nginx -y
+```
+
+2️⃣ Nginx 서버 블록 생성
+```
+sudo nano /etc/nginx/sites-available/test8.i2r.link
+```
+
+아래 내용 입력:
+```
+# HTTP → HTTPS 리디렉션
+server {
+    listen 80;
+    listen [::]:80;
+    server_name test8.i2r.link;
+    return 308 https://$host$request_uri;
+}
+
+# HTTPS 서비스
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name test8.i2r.link;
+
+    root /var/www/test8;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
+```
+sudo mkdir -p /var/www/test8
+echo "<h1>test8.i2r.link OK</h1>" | sudo tee /var/www/test8/index.html
+```
+
+4️⃣ 사이트 활성화 (심볼릭 링크 생성)
+```
+sudo ln -s /etc/nginx/sites-available/test8.i2r.link /etc/nginx/sites-enabled/
+```
+
+5️⃣ Nginx 설정 테스트 & 재시작
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+6️⃣ HTTPS 인증서 발급 (Let's Encrypt)
+```
 sudo certbot --nginx -d test8.i2r.link
 ```
+
+입력 가이드
+|항목|입력|
+|---|---|
+이메일 입력|kdi6033@gmail.com
+약관 동의|Y
+EFF 이메일 수신|N (선택)
+리디렉션|2 (Redirect) ✅
+
+7️⃣ 인증 자동 갱신 확인
+```
+sudo systemctl status certbot.timer
+```
+
+테스트 실행:
+```
+sudo certbot renew --dry-run
+```
+
+8️⃣ 접속 테스트
+
+브라우저에서 아래 입력:
+```
+https://test8.i2r.link
+```
+
+✅ 자물쇠(SSL) 표시
+✅ 화면: test8.i2r.link OK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ▶ 실행 과정 중 입력 예시
 
 1️⃣ 이메일 입력
