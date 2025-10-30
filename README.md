@@ -80,7 +80,6 @@ server {
         try_files $uri $uri/ /index.html;
     }
 }
-NGINX
 ```
 
 3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
