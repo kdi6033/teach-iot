@@ -237,12 +237,25 @@ mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
 
 
+-------------------
+⚙️ 8️⃣ Iot 서버 프로그램 AWS에 설치    
 
+[IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
 
+[IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
+서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
+✅backend : db-server.js 를 구동하고 시스템이 동작하면 자동으로 실행되게 한다.    
+- 데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
 
+[PM2 설정](https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95)     
 
+[filezilla 사용하여 파일전송](https://github.com/kdi6033/react/blob/main/README.md#ec2-%EC%84%9C%EB%B2%84%EC%97%90-filezilla%EB%A1%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)    
 
 ✅ backend db-server.js 부팅시 자동실행 설정
+backend 디레토리로 이동후
+```
+npm install
+```
 컴퓨터가 부팅시 자동으로 실행 하도롤 설정한다.
 ```
 sudo npm install -g pm2
@@ -258,26 +271,12 @@ pm2 실행 중인것을 보려면
 ```
 sudo pm2 list
 ```
-
-⚙️ 8️⃣ Iot 서버 프로그램 AWS에 설치    
-서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
-✅backend : db-server.js 를 구동하고 시스템이 동작하면 자동으로 실행되게 한다.    
-- 데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
-
-[PM2 설정](https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95)     
-
-[filezilla 사용하여 파일전송](https://github.com/kdi6033/react/blob/main/README.md#ec2-%EC%84%9C%EB%B2%84%EC%97%90-filezilla%EB%A1%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)    
-
 ✅frontend : react로 구성한 홈페이지 프로그램으로 "npm run build"로 build 를 만들고 AWS 서버의 html 디렉토리에 업로드 한다.    
-[IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
-
-[IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
 
 Nginx 설정에서 root 경로를 /var/www/html 로 지정합니다.
 ```
 sudo nginx -t && sudo systemctl reload nginx
 ```
-
 
 ✅ 4. 서비스 동작 확인
 db-server.js 의 api 명령을 하나 실행해 봅니다. test.i2r.link 은 자신의 DNS를 입력하세요
