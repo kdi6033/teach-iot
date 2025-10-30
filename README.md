@@ -62,7 +62,81 @@ sudo systemctl status certbot.timer
 🔒 확인:
 https://test.i2r.link 접속 시 자물쇠 표시 확인
 
+---------------------------
+🧩 3️⃣ Node.js 설치 및 API 서버 구축
+sudo apt install curl -y
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v && npm -v
+sudo npm install -g pm2
 
+📄 db-server.js
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const cors = require('cors');
+require('dotenv').config();
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const PORT = 1804;
+const MONGO_URL = 'mongodb://127.0.0.1:27017';
+const DB_NAME = 'local';
+app.get('/api/health', (_, res) => res.json({ ok: true, time: new Date().toISOString() }));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+📦 실행
+pm2 start db-server.js --name db-server
+pm2 save
+pm2 startup
+
+✅ 테스트
+curl -i http://localhost:1804/api/health
+
+
+📡 4️⃣ Mosquitto 설치 (MQTT 브로커)
+sudo apt install mosquitto mosquitto-clients -y
+sudo systemctl enable mosquitto
+
+📄 /etc/mosquitto/mosquitto.conf
+persistence true
+allow_anonymous true
+listener 1883
+protocol mqtt
+
+listener 8080
+protocol websockets
+
+✅ 테스트
+mosquitto_sub -h localhost -t test/topic &
+mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
+
+
+🗃️ 5️⃣ MongoDB 설치
+sudo apt update
+sudo apt install gnupg curl -y
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl enable mongod
+sudo systemctl start mongod
+
+✅ 확인
+mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+
+
+🧱 전체 연동 구조
+[Nginx:443] → [Node.js:1804] → [MongoDB:27017]
+                    └→ [Mosquitto:8080 → 8883]
+[IoT Device:1883] → [Mosquitto Broker]
+
+
+✅ 추천 순서의 장점
+장점설명즉시 결과 확인Nginx 설치 후 바로 화면 출력 가능SSL 우선 확보인증서 문제를 초기에 해결 가능API → MQTT → DB 흐름통신 → 데이터 저장 순으로 자연스럽게 연결교육 효율성각 단계가 시각적으로 확인 가능 (웹/터미널)
+
+원하신다면 위 내용을 학생용 실습 문서 (PDF) 로 자동 변환해드릴 수도 있습니다.
+➡️ “PDF로 만들어줘” 라고 하면 바로 생성해드리겠습니다.
 
 
 
