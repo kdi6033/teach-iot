@@ -12,30 +12,19 @@ IoT Cloud 서버를 완성하고, HTTPS로 접속 가능한 환경을 구축한�
 [과제 제출용 매뉴얼 (GitHub)](https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0)     
 
 -------------------
+⚙️ 설치 순서
 
+| 순서  | 항목                        | 주요 포트         | 설명                             |
+| --- | ------------------------- | ------------- | ------------------------------ |
+| 1️⃣ | **Nginx**                 | 80, 443, 8883 | React 웹UI, HTTPS Reverse Proxy |
+| 2️⃣ | **DNS (nip.io)**          | -             | AWS 공인 IP 기반 도메인 자동 생성         |
+| 3️⃣ | **인증서 설치 및 HTTPS 설정**     | -             | Certbot + Let's Encrypt        |
+| 4️⃣ | **Node.js 설치**            | 1804          | 백엔드 API 서버                     |
+| 5️⃣ | **Mosquitto 설치**          | 1883, 8080    | MQTT 브로커 (센서 통신)               |
+| 6️⃣ | **MongoDB 설치**            | 27017         | 데이터 저장소                        |
+| 7️⃣ | **FileZilla 설치 및 파일 업로드** | 22 (SFTP)     | backend / frontend 업로드 및 설치    |
 
-
-Nginx + Mosquitto + MongoDB + Node.js 통합 설치 가이드
-
-🧩 개요
-
-이 문서는 Ubuntu 서버에
-다음 3가지 서비스를 동시에 설치하여
-IoT 시스템을 통합 운용하는 방법을 설명합니다.
-| 구성요소                  | 역할                               | 포트            |
-| --------------------- | -------------------------------- | ------------- |
-| **Nginx**             | React 웹 UI 및 HTTPS Reverse Proxy | 80, 443, 8883 |
-| **Mosquitto**         | MQTT 브로커 (IoT 센서 통신)             | 1883, 8080    |
-| **MongoDB + Node.js** | 데이터 저장 및 API 서버                  | 27000, 1804   |
-
------------------------
-| 단계 | 구성요소                        | 역할                   | 비고                    |
-| -- | --------------------------- | -------------------- | --------------------- |
-| ①  | **Nginx**                   | 웹서버 + Reverse Proxy  | React 홈페이지 표시         |
-| ②  | **Certbot (SSL 인증서)**       | HTTPS 보안 연결 설정       | test.i2r.link 도메인     |
-| ③  | **Node.js (백엔드 서버)**        | MongoDB와 통신하는 API 서버 | `db-server.js` 실행     |
-| ④  | **Mosquitto (MQTT Broker)** | IoT 기기 통신            | 1883, 8080(WebSocket) |
-| ⑤  | **MongoDB (데이터베이스)**        | 센서/제어 데이터 저장         | Node.js와 연동           |
+-----------------
 
 ⚙️ 1️⃣ Nginx 설치 및 기본 웹서버 설정
 ```
