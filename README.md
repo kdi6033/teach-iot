@@ -84,7 +84,7 @@ server {
 
 3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
 ```
-sudo mkdir -p /var/www/test8
+sudo mkdir -p /var/www/test9
 echo "<h1>test9.i2r.link OK</h1>" | sudo tee /var/www/test9/index.html
 ```
 
