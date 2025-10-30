@@ -53,9 +53,10 @@ http://18.212.214.14.nip.io
 
 -----------------
 ⚙️ 3️⃣ HTTPS 인증서 설정 (Certbot)
+여기서는 test3.i2r.link 로 기술 하겠습니다. 18.212.214.14.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요
 ```
 sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d 18.212.214.14.nip.io
+sudo certbot --nginx -d test3.i2r.link
 ```
 자동 리디렉션(2번) 선택 후 /etc/letsencrypt/live/ 경로에 인증서 생성 확인
 
