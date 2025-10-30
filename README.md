@@ -191,11 +191,13 @@ curl -i http://localhost:1804/api/health
 ```
 
 ----------------------------
-📡 4️⃣ Mosquitto 설치 (MQTT 브로커)
+📡 4️⃣ Mosquitto 설치 (MQTT 브로커)    
+```
 sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
-
-📄 /etc/mosquitto/mosquitto.conf
+``` 
+📄 nano /etc/mosquitto/mosquitto.conf
+```
 persistence true
 allow_anonymous true
 listener 1883
@@ -203,11 +205,13 @@ protocol mqtt
 
 listener 8080
 protocol websockets
+```
 
 ✅ 테스트
+```
 mosquitto_sub -h localhost -t test/topic &
 mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
-
+```
 
 🗃️ 5️⃣ MongoDB 설치
 sudo apt update
