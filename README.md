@@ -57,7 +57,7 @@ http://18.212.214.14.nip.io
 여기서는 AWS Rout 53 에서 test4.i2r.link 로 발급해 이것으로 기술 하겠습니다. 18.212.214.14.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요
 ```
 sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d test4.i2r.link
+sudo certbot --nginx -d test8.i2r.link
 ```
 ▶ 실행 과정 중 입력 예시
 
@@ -74,23 +74,43 @@ sudo certbot --nginx -d test4.i2r.link
 → 2) Redirect 선택
 (HTTP → HTTPS 자동 리디렉션 설정)
 
-/etc/letsencrypt/live/ 경로에 인증서 생성 확인
-
-
-
-
-
-📄 sudo nano /etc/nginx/sites-available/test3.i2r.link.conf
+⚙️ test8.i2r.link 서버 블록 만들기
+```
+sudo nano /etc/nginx/sites-available/test8.i2r.link
+```
+다음 내용 입력:
 ```
 server {
     listen 80;
-    server_name test3.i2r.link;
-    return 308 https://$host$request_uri;
+    listen [::]:80;
+    server_name test8.i2r.link;
+
+    root /var/www/test7;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
 }
 ```
+
+⚙️ 웹폴더 생성 및 예제 페이지
+```
+sudo mkdir -p /var/www/test7
+echo "<h1>test7.i2r.link OK</h1>" | sudo tee /var/www/test7/index.html
+```
+⚙️ 사이트 활성화
+sudo ln -s /etc/nginx/sites-available/test8.i2r.link /etc/nginx/sites-enabled/
+
+⚙️ Nginx 테스트 & 재시작
+sudo nginx -t
+sudo systemctl restart nginx
+
+
+
 ✅ 인증서 발급
 ```
-sudo certbot --nginx -d test.i2r.link
+sudo certbot --nginx -d test8.i2r.link
 sudo systemctl status certbot.timer
 ```
 🔒 확인:
