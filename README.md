@@ -273,6 +273,12 @@ sudo pm2 list
 
 [IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
 
+Nginx 설정에서 root 경로를 /var/www/html 로 지정합니다.
+```
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+
 ✅ 4. 서비스 동작 확인
 db-server.js 의 api 명령을 하나 실행해 봅니다. test.i2r.link 은 자신의 DNS를 입력하세요
 예시:
