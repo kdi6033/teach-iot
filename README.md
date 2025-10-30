@@ -58,7 +58,7 @@ http://18.212.214.14.nip.io
 sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d test3.i2r.link
 ```
-자동 리디렉션(2번) 선택 후 /etc/letsencrypt/live/ 경로에 인증서 생성 확인
+자동 리디렉션(3번) 선택 후 /etc/letsencrypt/live/ 경로에 인증서 생성 확인
 
 
 
