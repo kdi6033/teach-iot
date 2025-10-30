@@ -175,10 +175,11 @@ app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 ```
 
 📦 실행
-pm2 start db-server.js --name db-server
+```
+pm2 start db-server.js --name db-server   
 pm2 save
 pm2 startup
-
+```
 ✅ 테스트
 curl -i http://localhost:1804/api/health
 
