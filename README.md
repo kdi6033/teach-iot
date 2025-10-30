@@ -35,6 +35,7 @@ sudo systemctl start nginx
 ```
 ✅ 테스트
 브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
+
 --------------
 ⚙️ 2️⃣ DNS 설정 (nip.io 사용)
 
