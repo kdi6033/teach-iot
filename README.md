@@ -160,30 +160,37 @@ nano ~/backend/db-server.js
 📄 db-server.js
 ```
 const express = require('express');
-const { MongoClient } = require('mongodb');
 const cors = require('cors');
-require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = 1804;
-const MONGO_URL = 'mongodb://127.0.0.1:27017';
-const DB_NAME = 'local';
-app.get('/api/health', (_, res) => res.json({ ok: true, time: new Date().toISOString() }));
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+// 헬스 체크만 제공
+app.get('/api/health', (_, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
 ```
 
 📦 실행
 ```
-pm2 start db-server.js --name db-server   
-pm2 save
-pm2 startup
+cd ~/backend
+npm init -y
+npm install express cors
+node db-server.js
 ```
-✅ 테스트
+✅ 테스트 (새 터미널에서)
+```
 curl -i http://localhost:1804/api/health
+```
 
-
+----------------------------
 📡 4️⃣ Mosquitto 설치 (MQTT 브로커)
 sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
