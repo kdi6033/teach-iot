@@ -8,8 +8,8 @@ IoT Cloud 서버를 완성하고, HTTPS로 접속 가능한 환경을 구축한�
 📍 참조 자료
 
 [교육지원사이트 : 경제과학진흥원](https://www.gbedu.or.kr/gbsa/education/course/view.do?deGrCode=DE_000002140&menuNo=400032)      
-[ChatGPT Assistant :i2r IoT PLC & Sensor](https://chatgpt.com/g/g-68fa17b36d3c819192a564d30d299395-i2r-iot-plc-sensor)
-[과제 제출용 매뉴얼 (GitHub)](https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0)
+[ChatGPT Assistant :i2r IoT PLC & Sensor](https://chatgpt.com/g/g-68fa17b36d3c819192a564d30d299395-i2r-iot-plc-sensor)     
+[과제 제출용 매뉴얼 (GitHub)](https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0)     
 
 -------------------
 
