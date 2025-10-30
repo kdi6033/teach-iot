@@ -35,12 +35,27 @@ sudo systemctl start nginx
 ```
 ✅ 테스트
 브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
+--------------
+⚙️ 2️⃣ DNS 설정 (nip.io 사용)
 
-🔐 2️⃣ HTTPS 인증서 설정 (Certbot)
+AWS 서버 IP가 18.212.214.14라면
+도메인은 다음처럼 사용합니다 👇
+```
+https://18.212.214.14.nip.io
+````
+
+-----------------
+⚙️ 3️⃣ HTTPS 인증서 설정 (Certbot)
 ```
 sudo apt install certbot python3-certbot-nginx -y
-sudo rm -f /etc/nginx/sites-enabled/default
+sudo certbot --nginx -d 18.212.214.14.nip.io
 ```
+자동 리디렉션(2번) 선택 후 /etc/letsencrypt/live/ 경로에 인증서 생성 확인
+
+
+
+
+
 📄 sudo nano /etc/nginx/sites-available/test3.i2r.link.conf
 ```
 server {
