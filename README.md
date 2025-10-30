@@ -23,7 +23,44 @@ IoT 시스템을 통합 운용하는 방법을 설명합니다.
 | **MongoDB + Node.js** | 데이터 저장 및 API 서버                  | 27000, 1804   |
 
 -----------------------
+| 단계 | 구성요소                        | 역할                   | 비고                    |
+| -- | --------------------------- | -------------------- | --------------------- |
+| ①  | **Nginx**                   | 웹서버 + Reverse Proxy  | React 홈페이지 표시         |
+| ②  | **Certbot (SSL 인증서)**       | HTTPS 보안 연결 설정       | test.i2r.link 도메인     |
+| ③  | **Node.js (백엔드 서버)**        | MongoDB와 통신하는 API 서버 | `db-server.js` 실행     |
+| ④  | **Mosquitto (MQTT Broker)** | IoT 기기 통신            | 1883, 8080(WebSocket) |
+| ⑤  | **MongoDB (데이터베이스)**        | 센서/제어 데이터 저장         | Node.js와 연동           |
 
+⚙️ 1️⃣ Nginx 설치 및 기본 웹서버 설정
+```
+sudo apt update
+sudo apt install nginx -y
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+✅ 테스트
+브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
+
+🔐 2️⃣ HTTPS 인증서 설정 (Certbot)
+```
+sudo apt install certbot python3-certbot-nginx -y
+sudo rm -f /etc/nginx/sites-enabled/default
+```
+📄 sudo nano /etc/nginx/sites-available/test3.i2r.link.conf
+```
+server {
+    listen 80;
+    server_name test3.i2r.link;
+    return 308 https://$host$request_uri;
+}
+```
+✅ 인증서 발급
+```
+sudo certbot --nginx -d test.i2r.link
+sudo systemctl status certbot.timer
+```
+🔒 확인:
+https://test.i2r.link 접속 시 자물쇠 표시 확인
 
 
 
