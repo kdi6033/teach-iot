@@ -223,35 +223,11 @@ mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
 
 🗃️ 5️⃣ MongoDB 설치
-```
-sudo apt update
-sudo apt install gnupg curl -y
-curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-sudo apt update
-sudo apt install -y mongodb-org
-sudo systemctl enable mongod
-sudo systemctl start mongod
-```
-
-✅ 확인
-mongo --eval 'db.runCommand({ connectionStatus: 1 })'
-
 
 🧱 전체 연동 구조
 [Nginx:443] → [Node.js:1804] → [MongoDB:27017]
                     └→ [Mosquitto:8080 → 8883]
 [IoT Device:1883] → [Mosquitto Broker]
-
-
-✅ 추천 순서의 장점
-장점설명즉시 결과 확인Nginx 설치 후 바로 화면 출력 가능SSL 우선 확보인증서 문제를 초기에 해결 가능API → MQTT → DB 흐름통신 → 데이터 저장 순으로 자연스럽게 연결교육 효율성각 단계가 시각적으로 확인 가능 (웹/터미널)
-
-원하신다면 위 내용을 학생용 실습 문서 (PDF) 로 자동 변환해드릴 수도 있습니다.
-➡️ “PDF로 만들어줘” 라고 하면 바로 생성해드리겠습니다.
-
-
-
 
 
 
