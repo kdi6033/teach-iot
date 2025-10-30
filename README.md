@@ -67,27 +67,20 @@ sudo nano /etc/nginx/sites-available/test8.i2r.link
 
 아래 내용 입력:
 ```
-# HTTP → HTTPS 리디렉션
 server {
     listen 80;
     listen [::]:80;
-    server_name test8.i2r.link;
-    return 308 https://$host$request_uri;
-}
-
-# HTTPS 서비스
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
     server_name test8.i2r.link;
 
     root /var/www/test8;
     index index.html;
 
+    # SPA가 아니라면 /index.html 포워딩은 빼도 됩니다.
     location / {
         try_files $uri $uri/ /index.html;
     }
 }
+NGINX
 ```
 
 3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
@@ -139,79 +132,6 @@ https://test8.i2r.link
 
 ✅ 자물쇠(SSL) 표시
 ✅ 화면: test8.i2r.link OK
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-▶ 실행 과정 중 입력 예시
-
-1️⃣ 이메일 입력
-→ 예: kdi6033@gmail.com
-
-2️⃣ 약관 동의
-→ Y 입력
-
-3️⃣ EFF(전자프론티어재단) 이메일 수신 여부
-→ 선택사항 (Y 또는 N)
-
-4️⃣ 인증 후 자동 리디렉션 옵션 선택
-→ 2) Redirect 선택
-(HTTP → HTTPS 자동 리디렉션 설정)
-
-⚙️ test8.i2r.link 서버 블록 만들기
-```
-sudo nano /etc/nginx/sites-available/test8.i2r.link
-```
-다음 내용 입력:
-```
-server {
-    listen 80;
-    listen [::]:80;
-    server_name test8.i2r.link;
-
-    root /var/www/test7;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-```
-
-⚙️ 웹폴더 생성 및 예제 페이지
-```
-sudo mkdir -p /var/www/test7
-echo "<h1>test7.i2r.link OK</h1>" | sudo tee /var/www/test7/index.html
-```
-⚙️ 사이트 활성화
-sudo ln -s /etc/nginx/sites-available/test8.i2r.link /etc/nginx/sites-enabled/
-
-⚙️ Nginx 테스트 & 재시작
-sudo nginx -t
-sudo systemctl restart nginx
-
-
-
-✅ 인증서 발급
-```
-sudo certbot --nginx -d test8.i2r.link
-sudo systemctl status certbot.timer
-```
-🔒 확인:
-https://test.i2r.link 접속 시 자물쇠 표시 확인
 
 ---------------------------
 🧩 3️⃣ Node.js 설치 및 API 서버 구축
