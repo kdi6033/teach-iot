@@ -37,8 +37,9 @@ sudo systemctl start nginx
 브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
 
 --------------
-⚙️ 2️⃣ DNS 설정 (nip.io 사용)
-
+⚙️ 2️⃣ DNS 설정
+[nip.io 사용](https://github.com/kdi6033/react#lets-encrypt-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%9E%90%EB%8F%99-%EB%B0%9C%EA%B8%89--https-%EC%84%A4%EC%A0%95%EC%9D%84-%EC%9C%84%ED%95%9C-nginx-%EA%B5%AC%EC%84%B1)
+[AWS Rout 53 이용](https://github.com/kdi6033/react#dns-htttp-https-%EC%84%A4%EC%A0%95)
 AWS 서버 IP가 18.212.214.14라면
 도메인은 다음처럼 사용합니다 👇
 ```
