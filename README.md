@@ -218,11 +218,12 @@ sudo systemctl restart mosquitto
 
 ✅ 테스트
 ```
-mosquitto_sub -h localhost -t test/topic &
+mosquitto_sub -h localhost -t test/topic
 mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
 
 🗃️ 5️⃣ MongoDB 설치
+```
 sudo apt update
 sudo apt install gnupg curl -y
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
@@ -231,6 +232,7 @@ sudo apt update
 sudo apt install -y mongodb-org
 sudo systemctl enable mongod
 sudo systemctl start mongod
+```
 
 ✅ 확인
 mongo --eval 'db.runCommand({ connectionStatus: 1 })'
