@@ -150,10 +150,13 @@ mkdir ~/backend
 ```
 
 
-✅ 2) db-server.js 파일 생성 및 내용 넣기
-nano 편집기로 열기
-nano ~/backend/db-server.js
+✅ 2) db-server.js 파일 생성 및 내용 넣기    
 
+nano 편집기로 열기
+```
+nano ~/backend/db-server.js
+```
+다음 내용으로 작성한다.
 📄 db-server.js
 ```
 const express = require('express');
