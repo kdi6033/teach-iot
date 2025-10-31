@@ -62,7 +62,7 @@ sudo apt install certbot python3-certbot-nginx -y
 
 2️⃣ Nginx 서버 블록 생성
 ```
-sudo nano /etc/nginx/sites-available/test9.i2r.link
+sudo nano /etc/nginx/sites-available/test.i2r.link
 ```
 
 아래 내용 입력:
@@ -70,9 +70,9 @@ sudo nano /etc/nginx/sites-available/test9.i2r.link
 server {
     listen 80;
     listen [::]:80;
-    server_name test9.i2r.link;
+    server_name test.i2r.link;
 
-    root /var/www/test9;
+    root /var/www/html;
     index index.html;
 
     # SPA가 아니라면 /index.html 포워딩은 빼도 됩니다.
@@ -84,13 +84,13 @@ server {
 
 3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
 ```
-sudo mkdir -p /var/www/test9
-echo "<h1>test9.i2r.link OK</h1>" | sudo tee /var/www/test9/index.html
+sudo mkdir -p /var/www/html
+echo "<h1>test.i2r.link OK</h1>" | sudo tee /var/www/html/index.html
 ```
 
 4️⃣ 사이트 활성화 (심볼릭 링크 생성)
 ```
-sudo ln -s /etc/nginx/sites-available/test9.i2r.link /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/test.i2r.link /etc/nginx/sites-enabled/
 ```
 
 5️⃣ Nginx 설정 테스트 & 재시작
@@ -101,7 +101,7 @@ sudo systemctl restart nginx
 
 6️⃣ HTTPS 인증서 발급 (Let's Encrypt)
 ```
-sudo certbot --nginx -d test9.i2r.link
+sudo certbot --nginx -d test.i2r.link
 ```
 
 입력 가이드
@@ -126,11 +126,11 @@ sudo certbot renew --dry-run
 
 브라우저에서 아래 입력:
 ```
-https://test9.i2r.link
+https://test.i2r.link
 ```
 
 ✅ 자물쇠(SSL) 표시
-✅ 화면: test8.i2r.link OK
+✅ 화면: test.i2r.link OK
 
 ---------------------------
 🧩 3️⃣ Node.js 설치 및 API 서버 구축    
