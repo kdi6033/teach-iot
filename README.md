@@ -287,8 +287,10 @@ curl http://127.0.0.1:1804/api/health
 {"ok":true,"pid":13738,"time":"2025-10-31T01:38:46.186Z"}
 ```
 
-✅ 최종 서버 설정
-파일내용 수정
+✅ 최종 서버 설정    
+
+파일내용 수정     
+
 📄 sudo nano /etc/nginx/sites-available/test.i2r.link.conf
 ```
 # ① MQTT WebSocket Secure Proxy
