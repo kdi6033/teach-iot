@@ -338,7 +338,11 @@ server {
     }
 }
 ```
-
+Nginx 재시작
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
 
 ------------------
 
