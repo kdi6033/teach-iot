@@ -11,6 +11,13 @@ IoT Cloud 서버를 완성하고, HTTPS로 접속 가능한 환경을 구축한�
 [ChatGPT Assistant :i2r IoT PLC & Sensor](https://chatgpt.com/g/g-68fa17b36d3c819192a564d30d299395-i2r-iot-plc-sensor)     
 [과제 제출용 매뉴얼 (GitHub)](https://github.com/kdi6033/teach-iot/releases/tag/homework-v1.0)     
 
+🧱 시스템 전체 구조
+```
+[React UI:443] ─▶ [Nginx] ─▶ [Node.js API:1804] ─▶ [MongoDB:27017]
+                            └▶ [Mosquitto WebSocket:8080 → 8883]
+[IoT Device:1883] ─────────▶ [Mosquitto MQTT Broker]
+```
+
 -------------------
 ⚙️ 설치 순서
 
@@ -348,13 +355,6 @@ sudo systemctl restart nginx
 ```
 
 ------------------
-
-🧱 시스템 전체 구조
-```
-[React UI:443] ─▶ [Nginx] ─▶ [Node.js API:1804] ─▶ [MongoDB:27017]
-                            └▶ [Mosquitto WebSocket:8080 → 8883]
-[IoT Device:1883] ─────────▶ [Mosquitto MQTT Broker]
-```
 
 📚 참고 리소스
 
