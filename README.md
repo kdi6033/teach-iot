@@ -65,7 +65,7 @@ sudo apt install certbot python3-certbot-nginx -y
 
 2) Nginx 서버 블록 생성
 ```
-sudo nano /etc/nginx/sites-available/test.i2r.link
+sudo nano /etc/nginx/sites-available/test.i2r.link.conf
 ```
 
 아래 내용 입력:
@@ -93,7 +93,7 @@ echo "<h1>test.i2r.link OK</h1>" | sudo tee /var/www/html/index.html
 
 4️) 사이트 활성화
 ```
-sudo ln -s /etc/nginx/sites-available/test.i2r.link /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/test.i2r.link.conf /etc/nginx/sites-enabled/
 ```
 
 5) Nginx 재시작
