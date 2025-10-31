@@ -26,7 +26,7 @@ IoT Cloud 서버를 완성하고, HTTPS로 접속 가능한 환경을 구축한�
 
 -----------------
 
-⚙️ 1️⃣ Nginx 설치 및 기본 웹서버 설정
+✅ 1️⃣ Nginx 설치 및 기본 웹서버 설정
 ```
 sudo apt update
 sudo apt install nginx -y
@@ -37,30 +37,33 @@ sudo systemctl start nginx
 브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
 
 --------------
-⚙️ 2️⃣ DNS 설정
+✅ 2️⃣ DNS 설정
 
+✅ nip.io 이용 (학생용)
 DNS를 가지고 있지 않은 경우 다음을 사용하세요. 학생들은 이것을 사용하세요
 [nip.io 사용](https://github.com/kdi6033/react#lets-encrypt-%EC%9D%B8%EC%A6%9D%EC%84%9C-%EC%9E%90%EB%8F%99-%EB%B0%9C%EA%B8%89--https-%EC%84%A4%EC%A0%95%EC%9D%84-%EC%9C%84%ED%95%9C-nginx-%EA%B5%AC%EC%84%B1)    
 
+✅ AWS Route 53 이용 (도메인 보유자)
 AWS에서 DNS를 가지고 있는 경우는 이를 이용하세요
 [AWS Rout 53 이용](https://github.com/kdi6033/react#dns-htttp-https-%EC%84%A4%EC%A0%95)     
 
-AWS 서버 IP가 18.212.214.14라면
-도메인은 다음처럼 사용합니다 도메인 동작을 확인하세요👇
+도메인 동작을 확인하세요👇
 ```
-http://18.212.214.14.nip.io
+http://서버IP.nip.io
 ````
 
 -----------------
-⚙️ 3️⃣ HTTPS 인증서 설정 (Certbot 설치)    
+✅ 3️⃣ HTTPS 인증서 설정 (Certbot + Nginx)    
 
-여기서는 AWS Rout 53 에서 test9.i2r.link 로 발급해 이것으로 기술 하겠습니다. 18.212.214.14.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요
+여기서는 AWS Rout 53 에서 test.i2r.link 로 발급해 이것으로 기술 하겠습니다. 서버IP.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요    
+
+1) 설치
 ```
 sudo apt update
 sudo apt install certbot python3-certbot-nginx -y
 ```
 
-2️⃣ Nginx 서버 블록 생성
+2) Nginx 서버 블록 생성
 ```
 sudo nano /etc/nginx/sites-available/test.i2r.link
 ```
@@ -82,24 +85,24 @@ server {
 }
 ```
 
-3️⃣ 웹 폴더 생성 및 테스트 페이지 작성
+3️) 테스트 페이지 작성
 ```
 sudo mkdir -p /var/www/html
 echo "<h1>test.i2r.link OK</h1>" | sudo tee /var/www/html/index.html
 ```
 
-4️⃣ 사이트 활성화 (심볼릭 링크 생성)
+4️) 사이트 활성화
 ```
 sudo ln -s /etc/nginx/sites-available/test.i2r.link /etc/nginx/sites-enabled/
 ```
 
-5️⃣ Nginx 설정 테스트 & 재시작
+5) Nginx 재시작
 ```
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-6️⃣ HTTPS 인증서 발급 (Let's Encrypt)
+6) SSL 인증서 발급
 ```
 sudo certbot --nginx -d test.i2r.link
 ```
@@ -112,7 +115,7 @@ sudo certbot --nginx -d test.i2r.link
 EFF 이메일 수신|N (선택)
 리디렉션|2 (Redirect) ✅
 
-7️⃣ 인증 자동 갱신 확인
+7) 인증 자동 갱신 확인
 ```
 sudo systemctl status certbot.timer
 ```
@@ -122,7 +125,7 @@ sudo systemctl status certbot.timer
 sudo certbot renew --dry-run
 ```
 
-8️⃣ 접속 테스트
+8) 접속 테스트
 
 브라우저에서 아래 입력:
 ```
@@ -133,7 +136,8 @@ https://test.i2r.link
 ✅ 화면: test.i2r.link OK
 
 ---------------------------
-🧩 3️⃣ Node.js 설치 및 API 서버 구축    
+✅ 4️⃣ Node.js 설치 및 API 서버 구축    
+✅ 1) 설
 ```
 sudo apt install curl -y
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
@@ -142,7 +146,7 @@ node -v && npm -v
 sudo npm install -g pm2
 ```
 
-✅ 1) backend 디렉토리 생성
+✅ 2) backend 디렉토리 생성
 현재 디렉토리가 ubutu 임을 확인 후 여기에 backend 생성
 ```
 pwd
@@ -150,14 +154,14 @@ mkdir ~/backend
 ```
 
 
-✅ 2) db-server.js 파일 생성 및 내용 넣기    
+✅ 3) db-server.js 파일 생성 및 내용 넣기    
 
 nano 편집기로 열기
 ```
 nano ~/backend/db-server.js
 ```
 다음 내용으로 작성한다.
-📄 db-server.js
+📄 sudo nano db-server.js
 ```
 const express = require('express');
 const cors = require('cors');
@@ -178,21 +182,21 @@ app.listen(PORT, () => {
 });
 ```
 
-📦 실행
+✅ 4) 실행
 ```
 cd ~/backend
 npm init -y
 npm install express cors
 node db-server.js
 ```
-✅ 테스트 (새 터미널에서)
+✅ 5) 테스트 (새 터미널에서)
 ```
 curl -i http://localhost:1804/api/health
 ```
 
 ----------------------------
-📡 4️⃣ Mosquitto 설치 (MQTT 브로커)    
-모스키토 설치 및 자동실행
+✅ 5️⃣ Mosquitto 설치 (MQTT 브로커)    
+1) 모스키토 설치 및 자동실행
 ```
 sudo apt install mosquitto mosquitto-clients -y
 sudo systemctl enable mosquitto
@@ -211,47 +215,40 @@ protocol websockets
 include_dir /etc/mosquitto/conf.d
 ```
 
-적용
+2) 재시작    
 ```
 sudo systemctl restart mosquitto
 ```
 
-✅ 테스트
+3) 테스트
 ```
 mosquitto_sub -h localhost -t test/topic
 mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
+------------
 
-🗃️ 5️⃣ MongoDB 설치  
+✅ 6️⃣ MongoDB 설치  
 
 다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
 메뉴얼 : https://github.com/kdi6033/i2r/blob/main/txt/aws%20mongoDB%20install     
 
-
-🧱 전체 연동 구조    
-```
-[Nginx:443] → [Node.js:1804] → [MongoDB:27017]
-                    └→ [Mosquitto:8080 → 8883]
-[IoT Device:1883] → [Mosquitto Broker]
-```
-
-
 -------------------
-⚙️ 8️⃣ Iot 서버 프로그램 AWS에 설치    
+
+✅ 7️⃣ Iot 서버 프로그램 AWS에 설치    
 
 [IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
 
 [IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
 서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
-✅backend : db-server.js 를 구동하고 시스템이 동작하면 자동으로 실행되게 한다.    
-- 데이터베이스 프로그램을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
+✅backend 구축     
+- 데이터베이스 프로그램(db-server.js)을 서버에 설치한 후에 PM2를 사용하여 자동으로 실행되게 설정한다.
 
 [PM2 설정](https://github.com/kdi6033/react?tab=readme-ov-file#%EF%B8%8F-4%EB%8B%A8%EA%B3%84-backend-db-serverjs-%EB%B6%80%ED%8C%85%EC%8B%9C-%EC%9E%90%EB%8F%99%EC%8B%A4%ED%96%89-%EC%84%A4%EC%A0%95)     
 
 [filezilla 사용하여 파일전송](https://github.com/kdi6033/react/blob/main/README.md#ec2-%EC%84%9C%EB%B2%84%EC%97%90-filezilla%EB%A1%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)    
 
-✅ backend db-server.js 부팅시 자동실행 설정
+1) backend db-server.js 부팅시 자동실행 설정
 backend 디레토리로 이동후
 ```
 npm install
@@ -271,14 +268,15 @@ pm2 실행 중인것을 보려면
 ```
 sudo pm2 list
 ```
-✅frontend : react로 구성한 홈페이지 프로그램으로 "npm run build"로 build 를 만들고 AWS 서버의 html 디렉토리에 업로드 한다.    
+✅frontend 구축
+react로 구성한 홈페이지 프로그램으로 "npm run build"로 build 를 만들고 AWS 서버의 html 디렉토리에 업로드 한다.    
 
 Nginx 설정에서 root 경로를 /var/www/html 로 지정합니다.
 ```
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-✅ 4. 서비스 동작 확인
+1) 서비스 동작 확인
 db-server.js 의 api 명령을 하나 실행해 봅니다. test.i2r.link 은 자신의 DNS를 입력하세요
 예시:
 ```
@@ -288,6 +286,8 @@ curl http://127.0.0.1:1804/api/health
 ```
 {"ok":true,"pid":13738,"time":"2025-10-31T01:38:46.186Z"}
 ```
+
+------------------
 
 🧱 시스템 전체 구조
 ```
