@@ -287,6 +287,59 @@ curl http://127.0.0.1:1804/api/health
 {"ok":true,"pid":13738,"time":"2025-10-31T01:38:46.186Z"}
 ```
 
+✅ 최종 서버 설정
+📄 sudo nano /etc/nginx/sites-available/test.i2r.link.conf
+```
+# ① MQTT WebSocket Secure Proxy
+server {
+    listen 8883 ssl;
+    server_name test.i2r.link;
+
+    ssl_certificate     /etc/letsencrypt/live/test.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+    }
+}
+
+# ② HTTP → HTTPS 리디렉션
+server {
+    listen 80;
+    server_name test.i2r.link;
+    return 308 https://$host$request_uri;
+}
+
+# ③ HTTPS (React UI + Node.js API)
+server {
+    listen 443 ssl;
+    server_name test.i2r.link;
+
+    ssl_certificate     /etc/letsencrypt/live/test.i2r.link/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/test.i2r.link/privkey.pem;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:1804;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
+```
+
+
 ------------------
 
 🧱 시스템 전체 구조
