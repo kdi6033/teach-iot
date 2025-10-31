@@ -288,6 +288,7 @@ curl http://127.0.0.1:1804/api/health
 ```
 
 ✅ 최종 서버 설정
+파일내용 수정
 📄 sudo nano /etc/nginx/sites-available/test.i2r.link.conf
 ```
 # ① MQTT WebSocket Secure Proxy
