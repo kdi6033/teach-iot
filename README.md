@@ -137,7 +137,7 @@ https://test.i2r.link
 
 ---------------------------
 ✅ 4️⃣ Node.js 설치 및 API 서버 구축    
-✅ 1) 설
+✅ 1) 설치
 ```
 sudo apt install curl -y
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
