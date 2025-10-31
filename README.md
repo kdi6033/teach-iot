@@ -282,11 +282,11 @@ sudo nginx -t && sudo systemctl reload nginx
 db-server.js 의 api 명령을 하나 실행해 봅니다. test.i2r.link 은 자신의 DNS를 입력하세요
 예시:
 ```
-curl -s -X POST https://test.i2r.link/api/records -k
+curl http://127.0.0.1:1804/api/health
 ```
 응답: 저장되어 있는 데이터가 출력된다.
 ```
-[{"_id":"6823eef0dec9a7b8b45ce2de","name":"a","temp":"27"},{"_id":"6823ef5cdec9a7b8b45ce2df","name":"a","temp":"27"}]
+{"ok":true,"pid":13738,"time":"2025-10-31T01:38:46.186Z"}
 ```
 
 🧱 시스템 전체 구조
