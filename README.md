@@ -33,7 +33,7 @@ IoT Cloud 서버를 완성하고, HTTPS로 접속 가능한 환경을 구축한�
 
 -----------------
 
-✅ 1️⃣ Nginx 설치 및 기본 웹서버 설정
+# ✅ 1️⃣ Nginx 설치 및 기본 웹서버 설정
 ```
 sudo apt update
 sudo apt install nginx -y
@@ -44,7 +44,7 @@ sudo systemctl start nginx
 브라우저에서 http://서버IP 접속 → “Welcome to nginx!” 페이지 확인
 
 --------------
-✅ 2️⃣ DNS 설정
+# ✅ 2️⃣ DNS 설정
 
 ✅ nip.io 이용 (학생용)
 DNS를 가지고 있지 않은 경우 다음을 사용하세요. 학생들은 이것을 사용하세요
@@ -60,7 +60,7 @@ http://서버IP.nip.io
 ````
 
 -----------------
-✅ 3️⃣ HTTPS 인증서 설정 (Certbot + Nginx)    
+# ✅ 3️⃣ HTTPS 인증서 설정 (Certbot + Nginx)    
 
 여기서는 AWS Rout 53 에서 test.i2r.link 로 발급해 이것으로 기술 하겠습니다. 서버IP.nip.io 와 같이 발급받으신 분들은 이것을 사용 하세요    
 
@@ -143,7 +143,7 @@ https://test.i2r.link
 ✅ 화면: test.i2r.link OK
 
 ---------------------------
-✅ 4️⃣ Node.js 설치 및 API 서버 구축    
+# ✅ 4️⃣ Node.js 설치 및 API 서버 구축    
 ✅ 1) 설치
 ```
 sudo apt install curl -y
@@ -202,7 +202,7 @@ curl -i http://localhost:1804/api/health
 ```
 
 ----------------------------
-✅ 5️⃣ Mosquitto 설치 (MQTT 브로커)    
+# ✅ 5️⃣ Mosquitto 설치 (MQTT 브로커)    
 1) 모스키토 설치 및 자동실행
 ```
 sudo apt install mosquitto mosquitto-clients -y
@@ -234,7 +234,7 @@ mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
 ------------
 
-✅ 6️⃣ MongoDB 설치  
+# ✅ 6️⃣ MongoDB 설치  
 
 다음 유튜브와 메누얼을 참조하여 mongoDB를 설치하세요    
 유튜브 : https://www.youtube.com/watch?v=WJrOxAN7ZH0    
@@ -242,7 +242,7 @@ mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 
 -------------------
 
-✅ 7️⃣ Iot 서버 프로그램 AWS에 설치    
+# ✅ 7️⃣ Iot 서버 프로그램 AWS에 설치    
 
 [IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
 
@@ -357,7 +357,7 @@ sudo systemctl restart nginx
 
 ------------------
 
-📚 참고 리소스
+# 📚 참고 리소스
 
 🔗 i2r 공식 GitHub: https://github.com/kdi6033
 
