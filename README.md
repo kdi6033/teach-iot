@@ -246,6 +246,7 @@ mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 
 [IoT 서버 소스프로그램 다운로드-간단한 교육용](https://github.com/kdi6033/i2r-03/releases/tag/react-25-11-test-v1.0)    
 
+상업용으로 사용하실 분들은 다음을 다운로드 해서 사용하세요    
 [IoT 서버 소스프로그램 다운로드](https://github.com/kdi6033/react/releases/tag/react-nip-ip-v1.0)     
 서버에는 backend (데이터베이스 프로그램) 와 frontend (UI 프로그램) 가 있습니다.    
 ✅backend 구축     
