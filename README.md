@@ -366,6 +366,11 @@ Additional Boards Manager URLs
 https://arduino.esp8266.com/stable/package_esp8266com_index.json
 https://dl.espressif.com/dl/package_esp32_index.json
 ```
+연습1    
+```
+와이파이 연결 프로그램 만들어줘
+ssid : 8F_academy    password: gbsa123@@
+```
 
 
 ------------------
