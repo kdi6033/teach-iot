@@ -550,6 +550,160 @@ void loop() {
 
 ```
 
+온도 습도 측정
+```
+/*
+ * i2r-03 Wi-Fi + MQTT + AHTX0 (I2C) Example
+ * ---------------------------------------------
+ * Board : ESP32 (i2r-03)
+ * Author: 김동일 교수 i2r (https://i2r.link)
+ * GitHub: https://github.com/kdi6033/i2r-03
+ */
+
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <Wire.h>
+#include <Adafruit_AHTX0.h>
+
+// -------------------------------------------------
+// 🔹 Wi-Fi 정보
+// -------------------------------------------------
+const char* ssid = "8F_academy";
+const char* password = "gbsa123@@";
+
+// -------------------------------------------------
+// 🔹 MQTT 서버 정보
+// -------------------------------------------------
+const char* mqtt_server = "test.i2r.link";
+const int   mqtt_port   = 1883;
+const char* inTopic     = "i2r/kdi6933@gmail.com/in";
+const char* outTopic    = "i2r/kdi6933@gmail.com/out";
+
+// -------------------------------------------------
+// 🔹 핀 설정
+// -------------------------------------------------
+#define RELAY_OUT2 26
+#define SDA_PIN    21
+#define SCL_PIN    22
+
+// -------------------------------------------------
+// 🔹 객체 선언
+// -------------------------------------------------
+WiFiClient espClient;
+PubSubClient client(espClient);
+Adafruit_AHTX0 aht;
+
+// -------------------------------------------------
+// 🔹 Wi-Fi 연결
+// -------------------------------------------------
+void setup_wifi() {
+  delay(10);
+  Serial.println("\n📡 Wi-Fi 연결 중...");
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\n✅ Wi-Fi 연결 성공!");
+  Serial.print("📶 IP 주소: ");
+  Serial.println(WiFi.localIP());
+}
+
+// -------------------------------------------------
+// 🔹 MQTT 메시지 수신 콜백
+// -------------------------------------------------
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("\n📩 수신 토픽: ");
+  Serial.println(topic);
+  Serial.print("📦 메시지: ");
+  for (int i = 0; i < length; i++) Serial.print((char)payload[i]);
+  Serial.println();
+
+  if (String(topic) == inTopic) {
+    if ((char)payload[0] == '1') {
+      digitalWrite(RELAY_OUT2, HIGH);
+      Serial.println("🔔 OUT2 ON");
+    } else {
+      digitalWrite(RELAY_OUT2, LOW);
+      Serial.println("💤 OUT2 OFF");
+    }
+  }
+}
+
+// -------------------------------------------------
+// 🔹 MQTT 서버 재연결
+// -------------------------------------------------
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("🔄 MQTT 연결 시도 중...");
+    String clientId = "i2r-03-" + String(random(0xffff), HEX);
+    if (client.connect(clientId.c_str())) {
+      Serial.println("\n✅ MQTT 연결 성공!");
+      client.subscribe(inTopic);
+      client.publish(outTopic, "i2r-03 AHTX0 Sensor Ready!");
+    } else {
+      Serial.print("❌ 실패, rc=");
+      Serial.print(client.state());
+      Serial.println(" → 5초 후 재시도");
+      delay(5000);
+    }
+  }
+}
+
+// -------------------------------------------------
+// 🔹 초기 설정
+// -------------------------------------------------
+void setup() {
+  Serial.begin(115200);
+  pinMode(RELAY_OUT2, OUTPUT);
+  digitalWrite(RELAY_OUT2, LOW);
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+  if (!aht.begin()) {
+    Serial.println("⚠️ AHTX0 센서 감지 실패! (배선 또는 주소 확인)");
+    while (1) delay(1000);
+  } else {
+    Serial.println("✅ AHTX0 센서 초기화 완료!");
+  }
+
+  setup_wifi();
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+}
+
+// -------------------------------------------------
+// 🔹 메인 루프
+// -------------------------------------------------
+void loop() {
+  if (!client.connected()) reconnect();
+  client.loop();
+
+  static unsigned long lastMsg = 0;
+  if (millis() - lastMsg > 5000) {
+    lastMsg = millis();
+
+    sensors_event_t humidity, temp;
+    aht.getEvent(&humidity, &temp); // AHTX0 데이터 읽기
+
+    float t = temp.temperature;
+    float h = humidity.relative_humidity;
+
+    if (isnan(t) || isnan(h)) {
+      Serial.println("⚠️ AHTX0 센서 데이터 읽기 실패!");
+      return;
+    }
+
+    char payload[100];
+    snprintf(payload, sizeof(payload), "{\"temp\":%.2f,\"humi\":%.2f}", t, h);
+    client.publish(outTopic, payload);
+
+    Serial.print("📤 MQTT 전송: ");
+    Serial.println(payload);
+  }
+}
+
+```
+
 
 ------------------
 
