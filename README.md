@@ -371,6 +371,57 @@ https://dl.espressif.com/dl/package_esp32_index.json
 와이파이 연결 프로그램 만들어줘
 ssid : 8F_academy    password: gbsa123@@
 ```
+```
+/*
+ * i2r-03 Wi-Fi Connection Example
+ * ---------------------------------------
+ * 보드: ESP32 (i2r-03)
+ * 기능: Wi-Fi 연결 후 IP 주소를 시리얼로 표시
+ * 제작: 김동일 교수 i2r 플랫폼 (https://i2r.link)
+ * GitHub: https://github.com/kdi6033/i2r-03
+ */
+
+#include <WiFi.h>  // ESP32 Wi-Fi 라이브러리
+
+// 🔹 Wi-Fi 정보 입력
+const char* ssid = "8F_academy";
+const char* password = "gbsa123@@";
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+  Serial.println("\n📡 i2r-03 Wi-Fi 연결 시도 중...");
+
+  // Wi-Fi 연결 시도
+  WiFi.begin(ssid, password);
+
+  int attempt = 0;
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+    attempt++;
+    if (attempt > 30) {
+      Serial.println("\n❌ 연결 실패! Wi-Fi 정보를 확인하세요.");
+      return;
+    }
+  }
+
+  Serial.println("\n✅ Wi-Fi 연결 성공!");
+  Serial.print("📶 연결된 SSID: ");
+  Serial.println(WiFi.SSID());
+  Serial.print("🌐 IP 주소: ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  // Wi-Fi가 유지되는지 확인
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("⚠️ Wi-Fi 연결 끊김! 재연결 시도 중...");
+    WiFi.reconnect();
+  }
+  delay(5000);
+}
+```
 
 
 ------------------
