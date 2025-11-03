@@ -423,6 +423,14 @@ void loop() {
 }
 ```
 
+mqtt 접속
+```
+mqtt 접속프로그램 추가해줘
+boker : test.i2r.link  port : 1883
+intopic: i2r/kdi6933@gmail.com/in
+outtopic: i2r/kdi6933@gmail.com/out
+```
+
 
 ------------------
 
