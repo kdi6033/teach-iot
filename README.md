@@ -359,6 +359,15 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
+------------------------
+# ✅8. 아두이노 실습
+Additional Boards Manager URLs
+```
+https://arduino.esp8266.com/stable/package_esp8266com_index.json
+https://dl.espressif.com/dl/package_esp32_index.json
+```
+
+
 ------------------
 
 # 📚 참고 리소스
