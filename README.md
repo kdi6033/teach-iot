@@ -432,21 +432,15 @@ outtopic: i2r/kdi6933@gmail.com/out
 ```
 ```
 /*
- * i2r-03 Wi-Fi + MQTT Example
- * -----------------------------------------
+ * i2r-03 Wi-Fi + MQTT Example (Modified for OUT2)
+ * -----------------------------------------------
  * Board : ESP32 (i2r-03)
- * Author: 김동일 교수 i2r 플랫폼 (https://i2r.link)
- * GitHub: https://github.com/kdi6033/i2r-03
- * 
- * 기능:
- * 1️⃣ Wi-Fi 연결 (SSID / Password)
- * 2️⃣ MQTT 브로커 연결 (test.i2r.link:1883)
- * 3️⃣ 수신 토픽(i2r/kdi6933@gmail.com/in) 구독
- * 4️⃣ 송신 토픽(i2r/kdi6933@gmail.com/out)으로 상태 메시지 전송
+ * 기능 : Wi-Fi + MQTT 통신 및 OUT2 릴레이 제어
+ * 수정 : 릴레이 제어 핀을 GPIO 25 → 26 으로 변경
  */
 
 #include <WiFi.h>
-#include <PubSubClient.h>  // MQTT 통신 라이브러리
+#include <PubSubClient.h>
 
 // -------------------------------------------------
 // 🔹 Wi-Fi 정보
@@ -462,8 +456,6 @@ const int   mqtt_port   = 1883;
 const char* inTopic     = "i2r/kdi6933@gmail.com/in";
 const char* outTopic    = "i2r/kdi6933@gmail.com/out";
 
-// -------------------------------------------------
-// 🔹 객체 선언
 // -------------------------------------------------
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -485,7 +477,7 @@ void setup_wifi() {
 }
 
 // -------------------------------------------------
-// 🔹 MQTT 메시지 수신 콜백 함수
+// 🔹 MQTT 메시지 수신 콜백
 // -------------------------------------------------
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("\n📩 수신 토픽: ");
@@ -496,20 +488,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println();
 
-  // 예시: 수신 명령에 따라 릴레이 제어
   if (String(topic) == inTopic) {
     if ((char)payload[0] == '1') {
-      digitalWrite(25, HIGH);
-      Serial.println("🔔 OUT1 ON");
+      digitalWrite(26, HIGH);   // ✅ OUT2 ON
+      Serial.println("🔔 OUT2 ON");
     } else {
-      digitalWrite(25, LOW);
-      Serial.println("💤 OUT1 OFF");
+      digitalWrite(26, LOW);    // ✅ OUT2 OFF
+      Serial.println("💤 OUT2 OFF");
     }
   }
 }
 
 // -------------------------------------------------
-// 🔹 MQTT 서버 재접속 함수
+// 🔹 MQTT 서버 재연결
 // -------------------------------------------------
 void reconnect() {
   while (!client.connected()) {
@@ -517,8 +508,8 @@ void reconnect() {
     String clientId = "i2r-03-" + String(random(0xffff), HEX);
     if (client.connect(clientId.c_str())) {
       Serial.println("\n✅ MQTT 연결 성공!");
-      client.subscribe(inTopic);  // 수신 토픽 구독
-      client.publish(outTopic, "Hello from i2r-03!"); // 초기 메시지 송신
+      client.subscribe(inTopic);
+      client.publish(outTopic, "Hello from i2r-03 (OUT2)!");
     } else {
       Serial.print("❌ 실패, rc=");
       Serial.print(client.state());
@@ -529,14 +520,14 @@ void reconnect() {
 }
 
 // -------------------------------------------------
-// 🔹 메인 함수
+// 🔹 메인 설정
 // -------------------------------------------------
 void setup() {
   Serial.begin(115200);
-  pinMode(25, OUTPUT);   // OUT1 릴레이 핀
-  digitalWrite(25, LOW);
+  pinMode(26, OUTPUT);       // ✅ OUT2 릴레이 핀 선언
+  digitalWrite(26, LOW);     // 초기 상태 OFF
 
-  setup_wifi();           // Wi-Fi 연결
+  setup_wifi();
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
 }
@@ -545,19 +536,18 @@ void setup() {
 // 🔹 메인 루프
 // -------------------------------------------------
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
+  if (!client.connected()) reconnect();
   client.loop();
 
   // 10초마다 상태 메시지 전송
   static unsigned long lastMsg = 0;
   if (millis() - lastMsg > 10000) {
     lastMsg = millis();
-    client.publish(outTopic, "i2r-03 is alive...");
+    client.publish(outTopic, "i2r-03 OUT2 is alive...");
     Serial.println("📤 상태 메시지 전송");
   }
 }
+
 ```
 
 
