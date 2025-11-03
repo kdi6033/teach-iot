@@ -232,6 +232,9 @@ sudo systemctl restart mosquitto
 mosquitto_sub -h localhost -t test/topic
 mosquitto_pub -h localhost -t test/topic -m "Hello MQTT"
 ```
+다음 사이트에서 테스트 할 수 힜습니다.
+[mqtt 통신을 테스트는 다음 사이트를 이용하세요.](https://www.hivemq.com/demos/websocket-client/)
+
 ------------
 
 # ✅ 6️⃣ MongoDB 설치  
