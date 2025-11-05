@@ -723,6 +723,74 @@ on
 { "c": "gs", "m": "B0:A7:32:1D:AF:50" }
 ```
 
+# ✅9. iot 핵심 연습   
+
+🔹 3️⃣ Node.js + MongoDB 서버 구축
+
+📂 /server/server.js
+```
+import express from 'express';
+import mongoose from 'mongoose';
+import mqtt from 'mqtt';
+
+const app = express();
+mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true });
+
+const DataSchema = new mongoose.Schema({
+  mac: String,
+  temp: Number,
+  humi: Number,
+  ts: { type: Date, default: Date.now },
+});
+const Sensor = mongoose.model('Sensor', DataSchema);
+
+const client = mqtt.connect('mqtt://broker.i2r.link');
+client.on('connect', () => client.subscribe('i2r/sensor'));
+client.on('message', (topic, msg) => {
+  const data = JSON.parse(msg.toString());
+  console.log('Data received:', data);
+  new Sensor(data).save();
+});
+
+app.listen(5000, () => console.log('Server running at http://localhost:5000'));
+
+```
+
+🔹 4️⃣ React UI (실시간 모니터링)
+
+📂 /src/components/TempDashboard.tsx
+```
+import React, { useEffect, useState } from 'react';
+import mqtt from 'mqtt';
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+
+export default function TempDashboard() {
+  const [data, setData] = useState<any[]>([]);
+  const client = mqtt.connect('wss://broker.i2r.link:8083');
+
+  useEffect(() => {
+    client.on('connect', () => client.subscribe('i2r/sensor'));
+    client.on('message', (_, msg) => {
+      const payload = JSON.parse(msg.toString());
+      setData(prev => [...prev.slice(-19), { time: new Date().toLocaleTimeString(), temp: payload.temp }]);
+    });
+  }, []);
+
+  return (
+    <div className="p-4">
+      <h2 className="text-xl font-bold">🌡️ 실시간 온도 그래프</h2>
+      <LineChart width={600} height={300} data={data}>
+        <CartesianGrid stroke="#ccc" />
+        <XAxis dataKey="time" />
+        <YAxis domain={[0, 50]} />
+        <Tooltip />
+        <Line type="monotone" dataKey="temp" stroke="#f97316" strokeWidth={2} />
+      </LineChart>
+    </div>
+  );
+}
+
+```
 
 ------------------
 
